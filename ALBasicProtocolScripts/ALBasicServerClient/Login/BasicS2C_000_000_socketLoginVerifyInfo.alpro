@@ -1,0 +1,8 @@
+    JavaPackage s2c.BasicServer;
+    CSharpSpace c2s.BasicServer;
+
+    ALProtocol BasicS2C_000_000_VerifyInfo
+    {
+        string userName;
+        int socketID;
+    }

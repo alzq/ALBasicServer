@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Tue Feb 19 22:35:12 CST 2013
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=ALStructureBasicPackage.jar
+manifest.mergeall=true
+manifest.mainclass=
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
