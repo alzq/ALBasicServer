@@ -382,7 +382,7 @@ public class ALBasicClientSocket
         if(_m_bLoged)
         {
             //已经登录了为退出操作
-            _m_clClient.Logout();
+            _m_clClient.Disconnect();
         }
         else if(_m_bLoginIng)
         {

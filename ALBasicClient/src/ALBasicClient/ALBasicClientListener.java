@@ -85,7 +85,7 @@ public abstract class ALBasicClientListener implements IALProtocolReceiver
      * @author alzq.z
      * @time   Feb 19, 2013 10:05:07 PM
      */
-    public abstract void Logout();
+    public abstract void Disconnect();
     /***************
      * 登录成功
      * 
