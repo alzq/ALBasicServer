@@ -23,7 +23,7 @@ public abstract class ALBasicServerSocketListener implements IALProtocolReceiver
      * @author alzq.z
      * @time   Feb 19, 2013 11:49:51 AM
      */
-    public int getSocketID()
+    public long getSocketID()
     {
     	if(null == _m_csSocket)
     		return 0;

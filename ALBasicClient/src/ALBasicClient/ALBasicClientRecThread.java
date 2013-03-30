@@ -11,7 +11,7 @@ import java.util.Set;
 
 import ALBasicCommon.ALBasicThread;
 import ALServerLog.ALServerLog;
-import c2s.BasicServer.BasicC2S_000_000_VerifyInfo;
+import BasicServer.C2S_BasicClientVerifyInfo;
 
 public class ALBasicClientRecThread extends ALBasicThread
 {
@@ -62,7 +62,7 @@ public class ALBasicClientRecThread extends ALBasicThread
             _m_SocketChannel.register(clientSelector, SelectionKey.OP_READ);
             
             //发送登录请求
-            BasicC2S_000_000_VerifyInfo msg = new BasicC2S_000_000_VerifyInfo();
+            C2S_BasicClientVerifyInfo msg = new C2S_BasicClientVerifyInfo();
             msg.setUserName(_m_scSocket.getUserName());
             msg.setUserPassword(_m_scSocket.getUserPassword());
             

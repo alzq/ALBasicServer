@@ -2,12 +2,12 @@ package ALBasicServer.ALVerifyObj;
 
 import java.util.Hashtable;
 
-import s2c.BasicServer.BasicS2C_000_000_VerifyInfo;
 import ALBasicServer.ALServerAsynTask.ALAsynTaskManager;
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALSocket.ALBasicServerSocket;
-import ALBasicServer.ALSocket.ALServerSocketMgr;
 import ALBasicServer.ALSocket.ALBasicServerSocketListener;
+import ALBasicServer.ALSocket.ALServerSocketMgr;
+import BasicServer.S2C_BasicClientVerifyResult;
 
 /******************
  * 连接Socket验证的管理对象
@@ -81,7 +81,7 @@ public class ALVerifyObjMgr
             socket.setLoginEnd();
 
             //创建返回协议
-            BasicS2C_000_000_VerifyInfo retMsg = new BasicS2C_000_000_VerifyInfo();
+            S2C_BasicClientVerifyResult retMsg = new S2C_BasicClientVerifyResult();
             retMsg.setUserName(socket.getUserName());
             retMsg.setSocketID(socket.getSocketID());
 

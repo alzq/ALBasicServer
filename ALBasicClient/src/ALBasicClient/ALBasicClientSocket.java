@@ -7,13 +7,13 @@ import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
 
-import s2c.BasicServer.BasicS2C_000_000_VerifyInfo;
 import ALServerLog.ALServerLog;
+import BasicServer.S2C_BasicClientVerifyResult;
 
 public class ALBasicClientSocket
 {
     /** 对应于服务端的ID */
-    private int _m_iClientID;
+    private long _m_iClientID;
     /** 对应的处理对象 */
     private ALBasicClientListener _m_clClient;
     /** 验证时传入的用户名 */
@@ -60,7 +60,7 @@ public class ALBasicClientSocket
         _m_bByteBuffer.clear();
     }
     
-    public int getID() {return _m_iClientID;}
+    public long getID() {return _m_iClientID;}
     public boolean getIsLoginIng() {return _m_bLoginIng;}
     public String getUserName() {return _m_sUserName;}
     public String getUserPassword() {return _m_sUserPassword;}
@@ -327,7 +327,7 @@ public class ALBasicClientSocket
         
         try
         {
-            BasicS2C_000_000_VerifyInfo msg = new BasicS2C_000_000_VerifyInfo();
+            S2C_BasicClientVerifyResult msg = new S2C_BasicClientVerifyResult();
             msg.readPackage(_mes);
             
             //获取ID

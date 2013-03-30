@@ -1,0 +1,8 @@
+    JavaPackage BasicServer;
+    CSharpSpace BasicServer;
+
+    ALProtocol C2S_BasicClientVerifyInfo
+    {
+        string userName;
+        string userPassword;
+    }

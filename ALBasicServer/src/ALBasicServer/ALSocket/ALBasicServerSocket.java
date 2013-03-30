@@ -10,13 +10,13 @@ import ALBasicServer.ALBasicServerConf;
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALVerifyObj.ALVerifyObjMgr;
 import ALServerLog.ALServerLog;
-import c2s.BasicServer.BasicC2S_000_000_VerifyInfo;
+import BasicServer.C2S_BasicClientVerifyInfo;
 
 
 public class ALBasicServerSocket
 {
     /** 对应的连接ID */
-    private int _m_ID;
+    private long _m_ID;
     /** 对应的连接对象 */
     private SocketChannel _m_scSocketChannel;
     /** 对应的处理对象 */
@@ -45,7 +45,7 @@ public class ALBasicServerSocket
     private int _m_sBufferLen;
     private ByteBuffer _m_bByteBuffer;
     
-    public ALBasicServerSocket(int _id, SocketChannel _channel)
+    public ALBasicServerSocket(long _id, SocketChannel _channel)
     {
         _m_ID = _id;
         _m_scSocketChannel = _channel;
@@ -65,7 +65,7 @@ public class ALBasicServerSocket
         _m_bByteBuffer.clear();
     }
     
-    public int getSocketID() {return _m_ID;}
+    public long getSocketID() {return _m_ID;}
     public String getUserName() {return _m_sUserName;}
     public String getUserPassword() {return _m_sUserPassword;}
     public ALBasicServerSocketListener getListener() {return _m_clListener;}
@@ -440,7 +440,7 @@ public class ALBasicServerSocket
         if(null == _m_scSocketChannel || _m_bLoginIng || null != _m_clListener)
             return ;
 
-        BasicC2S_000_000_VerifyInfo info = new BasicC2S_000_000_VerifyInfo();
+        C2S_BasicClientVerifyInfo info = new C2S_BasicClientVerifyInfo();
         try
         {
             info.readPackage(_loginBuf);

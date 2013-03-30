@@ -24,7 +24,7 @@ import ALServerLog.ALServerLog;
 public class ALServerSocketListenFunction
 {
     /** 分配Socket连接的ID标志 */
-    private static int g_socketSerialize = 1;
+    private static long g_socketSerialize = 1;
     
     /**********************
      * 开启服务器监听端口，并对所有返回数据做处理
@@ -161,7 +161,7 @@ public class ALServerSocketListenFunction
      * 获取新的SocketID
      * @return
      */
-    protected static int _getSocketID()
+    protected static long _getSocketID()
     {
         return g_socketSerialize++;
     }
