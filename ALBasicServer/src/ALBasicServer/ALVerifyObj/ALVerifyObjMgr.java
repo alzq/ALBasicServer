@@ -98,7 +98,7 @@ public class ALVerifyObjMgr
      * @author alzq.z
      * @time   Feb 19, 2013 3:14:37 PM
      */
-    private int _getSerizlize()
+    private synchronized int _getSerizlize()
     {
         return g_verifySerialize++;
     }

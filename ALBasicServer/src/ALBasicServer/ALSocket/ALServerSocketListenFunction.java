@@ -161,7 +161,7 @@ public class ALServerSocketListenFunction
      * 获取新的SocketID
      * @return
      */
-    protected static long _getSocketID()
+    protected static synchronized long _getSocketID()
     {
         return g_socketSerialize++;
     }
