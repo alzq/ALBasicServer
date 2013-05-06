@@ -322,7 +322,14 @@ public class ALBasicServerSocket
         if(null != buf)
         {
             //处理消息
-            _m_clListener.receiveMsg(buf);
+            try
+            {
+                _m_clListener.receiveMsg(buf);
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
 
         _lockRecMes();
