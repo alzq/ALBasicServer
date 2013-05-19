@@ -58,6 +58,26 @@ public abstract class ALBasicProtocolMainOrderDealer
         dealArray[subOrder] = _dealer;
     }
     
+    /****************
+     * 强制设置指定对象为处理对象
+     * 
+     * @author alzq.z
+     * @time   Feb 19, 2013 10:52:50 AM
+     */
+    public void setSubDealer(int _subOrderID, ALBasicProtocolSubOrderDealer _dealer)
+    {
+        if(null == dealArray)
+            return ;
+        
+        if(_subOrderID >= dealArray.length)
+        {
+            ALServerLog.Fatal(mainOrder + " Protocol dispather don't have " + _subOrderID + " size list to save the dealer obj!");
+            return ;
+        }
+        
+        dealArray[_subOrderID] = _dealer;
+    }
+    
 	/**********************
 	 * 根据协议编号分发协议并进行处理
 	 * 
