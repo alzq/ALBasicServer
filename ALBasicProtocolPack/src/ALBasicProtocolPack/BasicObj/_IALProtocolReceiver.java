@@ -1,6 +1,6 @@
 package ALBasicProtocolPack.BasicObj;
 
-public interface IALProtocolReceiver
+public interface _IALProtocolReceiver
 {
 
 }

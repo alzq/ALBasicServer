@@ -28,7 +28,7 @@ public abstract class ALBasicProtocolSubOrderDealer<T extends IALProtocolStructu
 	 * @author alzq.z
 	 * @time   Feb 19, 2013 10:52:19 AM
 	 */
-	public void dealProtocol(IALProtocolReceiver _receiver, ByteBuffer _msgBuffer)
+	public void dealProtocol(_IALProtocolReceiver _receiver, ByteBuffer _msgBuffer)
 	{
 		T protocolObj = _createProtocolObj();
 		protocolObj.readPackage(_msgBuffer);
@@ -60,5 +60,5 @@ public abstract class ALBasicProtocolSubOrderDealer<T extends IALProtocolStructu
 	 * @author alzq.z
 	 * @time   Feb 19, 2013 10:52:30 AM
 	 */
-	protected abstract void _dealProtocol(IALProtocolReceiver _receiver, T _msg);
+	protected abstract void _dealProtocol(_IALProtocolReceiver _receiver, T _msg);
 }

@@ -3,7 +3,7 @@ package ALBasicServer.ALSocket;
 import java.nio.ByteBuffer;
 
 import ALBasicProtocolPack.IALProtocolStructure;
-import ALBasicProtocolPack.BasicObj.IALProtocolReceiver;
+import ALBasicProtocolPack.BasicObj._IALProtocolReceiver;
 
 /***********************
  * 服务器架构下的消息处理对象，作为带入到消息实际处理函数中的一个参数
@@ -12,7 +12,7 @@ import ALBasicProtocolPack.BasicObj.IALProtocolReceiver;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 19, 2013 11:48:14 AM
  */
-public abstract class ALBasicServerSocketListener implements IALProtocolReceiver
+public abstract class ALBasicServerSocketListener implements _IALProtocolReceiver
 {
     /** Socket对象 */
     private ALBasicServerSocket _m_csSocket;

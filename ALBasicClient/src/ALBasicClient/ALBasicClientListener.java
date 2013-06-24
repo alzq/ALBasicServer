@@ -3,9 +3,9 @@ package ALBasicClient;
 import java.nio.ByteBuffer;
 
 import ALBasicProtocolPack.IALProtocolStructure;
-import ALBasicProtocolPack.BasicObj.IALProtocolReceiver;
+import ALBasicProtocolPack.BasicObj._IALProtocolReceiver;
 
-public abstract class ALBasicClientListener implements IALProtocolReceiver
+public abstract class ALBasicClientListener implements _IALProtocolReceiver
 {
     /** 连接的端口对象 */
     private ALBasicClientSocket _m_csClientSocket;

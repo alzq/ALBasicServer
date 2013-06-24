@@ -18,6 +18,21 @@ public class ALBasicCommonFun
      * @time   Feb 19, 2013 11:30:30 AM
      */
     public static int byte2int(byte value) { return (int)value & 0xFF; }
+    
+    /*****************
+     * 将2个short转化为int对象
+     * 
+     * @author alzq.z
+     * @time   Feb 19, 2013 11:30:30 AM
+     */
+    public static int mergeShort(short _s1, short _s2)
+    {
+        return (((int)_s1) << 16) | _s2;
+    }
+    public static int mergeShortNum(int _s1, int _s2)
+    {
+        return (_s1 << 16) | _s2;
+    }
 
     public static boolean getBoolean(ByteBuffer buf)
     {

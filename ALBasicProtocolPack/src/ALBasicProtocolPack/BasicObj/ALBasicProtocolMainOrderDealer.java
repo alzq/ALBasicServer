@@ -84,7 +84,7 @@ public abstract class ALBasicProtocolMainOrderDealer
 	 * @author alzq.z
 	 * @time   Feb 19, 2013 10:52:46 AM
 	 */
-	public boolean dispathProtocol(IALProtocolReceiver _receiver, ByteBuffer _msg)
+	public boolean dispathProtocol(_IALProtocolReceiver _receiver, ByteBuffer _msg)
 	{
         if(null == _msg)
             return false;

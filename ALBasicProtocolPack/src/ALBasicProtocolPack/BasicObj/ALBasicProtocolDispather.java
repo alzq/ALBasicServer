@@ -45,7 +45,7 @@ public class ALBasicProtocolDispather
 	 * @author alzq.z
 	 * @time   Feb 19, 2013 11:31:49 AM
 	 */
-	public boolean DealProtocol(IALProtocolReceiver _receiver, ByteBuffer _msg)
+	public boolean DealProtocol(_IALProtocolReceiver _receiver, ByteBuffer _msg)
 	{
 	    //获取主协议编号
 	    byte mainOrder = _msg.get();
