@@ -7,7 +7,7 @@ package ALBasicServer.ALTask;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 18, 2013 10:52:27 PM
  */
-public interface IALAsynRunnableTask
+public interface _IALAsynRunnableTask
 {
     /*******************
      * 异步处理函数中的执行函数

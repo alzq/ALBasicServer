@@ -1,7 +1,7 @@
 package ALBasicServer.ALVerifyObj;
 
 import ALBasicServer.ALBasicServer;
-import ALBasicServer.ALTask.IALAsynRunnableTask;
+import ALBasicServer.ALTask._IALAsynRunnableTask;
 
 
 /****************
@@ -9,7 +9,7 @@ import ALBasicServer.ALTask.IALAsynRunnableTask;
  * @author alzq
  *
  */
-public class AsynRun_UserLoginTask implements IALAsynRunnableTask
+public class AsynRun_UserLoginTask implements _IALAsynRunnableTask
 {
     private ALVerifyDealerObj _m_vdVerifyDealer;
     private String _m_sUserName;

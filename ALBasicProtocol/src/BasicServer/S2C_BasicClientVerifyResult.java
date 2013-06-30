@@ -1,7 +1,7 @@
 package BasicServer;
 
 import java.nio.ByteBuffer;
-public class S2C_BasicClientVerifyResult implements ALBasicProtocolPack.IALProtocolStructure {
+public class S2C_BasicClientVerifyResult implements ALBasicProtocolPack._IALProtocolStructure {
 private String userName;
 private Long socketID;
 

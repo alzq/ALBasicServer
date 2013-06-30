@@ -2,7 +2,7 @@ package ALBasicServer.ALSocket;
 
 import java.nio.ByteBuffer;
 
-import ALBasicProtocolPack.IALProtocolStructure;
+import ALBasicProtocolPack._IALProtocolStructure;
 import ALBasicProtocolPack.BasicObj._IALProtocolReceiver;
 
 /***********************
@@ -49,7 +49,7 @@ public abstract class ALBasicServerSocketListener implements _IALProtocolReceive
         
         _m_csSocket.send(_buffer);
     }
-    public void send(IALProtocolStructure _protocolObj)
+    public void send(_IALProtocolStructure _protocolObj)
     {
         if(null == _m_csSocket || null == _protocolObj)
             return ;

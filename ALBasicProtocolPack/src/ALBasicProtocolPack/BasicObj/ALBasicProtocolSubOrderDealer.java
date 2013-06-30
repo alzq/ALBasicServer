@@ -2,7 +2,7 @@ package ALBasicProtocolPack.BasicObj;
 
 import java.nio.ByteBuffer;
 
-import ALBasicProtocolPack.IALProtocolStructure;
+import ALBasicProtocolPack._IALProtocolStructure;
 
 
 /**********************
@@ -12,7 +12,7 @@ import ALBasicProtocolPack.IALProtocolStructure;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 19, 2013 10:56:34 AM
  */
-public abstract class ALBasicProtocolSubOrderDealer<T extends IALProtocolStructure>
+public abstract class ALBasicProtocolSubOrderDealer<T extends _IALProtocolStructure>
 {
     /** 实例化对象，用于获取信息使用 */
     private T basicInfoObj;

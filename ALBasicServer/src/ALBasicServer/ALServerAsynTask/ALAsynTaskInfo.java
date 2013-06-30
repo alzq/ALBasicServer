@@ -1,9 +1,9 @@
 package ALBasicServer.ALServerAsynTask;
 
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
-import ALBasicServer.ALTask.IALAsynCallBackTask;
-import ALBasicServer.ALTask.IALAsynCallTask;
-import ALBasicServer.ALTask.IALAsynRunnableTask;
+import ALBasicServer.ALTask._IALAsynCallBackTask;
+import ALBasicServer.ALTask._IALAsynCallTask;
+import ALBasicServer.ALTask._IALAsynRunnableTask;
 
 /*********************
  * 异步任务处理信息对象
@@ -14,17 +14,17 @@ import ALBasicServer.ALTask.IALAsynRunnableTask;
  */
 public class ALAsynTaskInfo<T>
 {
-    private IALAsynCallTask<T> _m_tCallObj;
-    private IALAsynCallBackTask<T> _m_tCallBackObj;
-    private IALAsynRunnableTask _m_tRunObj;
+    private _IALAsynCallTask<T> _m_tCallObj;
+    private _IALAsynCallBackTask<T> _m_tCallBackObj;
+    private _IALAsynRunnableTask _m_tRunObj;
     
-    public ALAsynTaskInfo(IALAsynCallTask<T> _callObj, IALAsynCallBackTask<T> _callBackObj)
+    public ALAsynTaskInfo(_IALAsynCallTask<T> _callObj, _IALAsynCallBackTask<T> _callBackObj)
     {
         _m_tCallObj = _callObj;
         _m_tCallBackObj = _callBackObj;
         _m_tRunObj = null;
     }
-    public ALAsynTaskInfo(IALAsynRunnableTask _runObj)
+    public ALAsynTaskInfo(_IALAsynRunnableTask _runObj)
     {
         _m_tCallObj = null;
         _m_tCallBackObj = null;

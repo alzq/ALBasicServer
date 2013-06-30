@@ -7,7 +7,7 @@ package ALBasicServer.ALTask;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 18, 2013 10:53:01 PM
  */
-public interface IALAsynCallTask<T>
+public interface _IALAsynCallTask<T>
 {
     /**************************
      * 异步任务中处理实际逻辑的处理函数

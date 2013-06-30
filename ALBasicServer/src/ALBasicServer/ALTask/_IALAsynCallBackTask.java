@@ -8,7 +8,7 @@ package ALBasicServer.ALTask;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 18, 2013 10:54:14 PM
  */
-public interface IALAsynCallBackTask<T>
+public interface _IALAsynCallBackTask<T>
 {
     /****************
      * 异步成功后的回调处理函数

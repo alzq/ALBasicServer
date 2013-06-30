@@ -1,6 +1,6 @@
 package ALBasicServer.ALVerifyObj;
 
-public interface IALVerifyFun
+public interface _IALVerifyFun
 {
     /*******************
      * 验证用户身份并返回身份标识对象,此函数在异步处理中调用

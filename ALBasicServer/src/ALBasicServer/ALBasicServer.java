@@ -3,7 +3,7 @@ package ALBasicServer;
 import ALBasicServer.ALServerAsynTask.ALAsynTaskManager;
 import ALBasicServer.ALSocket.ALServerSocketListenFunction;
 import ALBasicServer.ALThread.ALThreadManager;
-import ALBasicServer.ALVerifyObj.IALVerifyFun;
+import ALBasicServer.ALVerifyObj._IALVerifyFun;
 import ALServerLog.ALServerLog;
 
 public class ALBasicServer
@@ -11,7 +11,7 @@ public class ALBasicServer
     /** 是否成功初始化 */
     private static boolean g_inited = false;
     /** 注册的验证对象 */
-    private static IALVerifyFun g_CosVerifyObj = null;
+    private static _IALVerifyFun g_CosVerifyObj = null;
     
     /**
      * 服务器模块启动初始化函数<br>
@@ -79,7 +79,7 @@ public class ALBasicServer
      * @author alzq.z
      * @time   Feb 19, 2013 4:33:57 PM
      */
-    public static void regVerifyObj(IALVerifyFun _obj)
+    public static void regVerifyObj(_IALVerifyFun _obj)
     {
         g_CosVerifyObj = _obj;
     }
@@ -90,7 +90,7 @@ public class ALBasicServer
      * @author alzq.z
      * @time   Feb 19, 2013 4:34:01 PM
      */
-    public static IALVerifyFun getVerifyObj()
+    public static _IALVerifyFun getVerifyObj()
     {
         return g_CosVerifyObj;
     }

@@ -1,14 +1,14 @@
 package ALBasicServer.ALServerAsynTask;
 
-import ALBasicServer.ALTask.IALAsynCallBackTask;
+import ALBasicServer.ALTask._IALAsynCallBackTask;
 import ALBasicServer.ALTask._IALSynTask;
 
 public class SynAsynCallBackTask<T> implements _IALSynTask
 {
     private T _m_OBJ;
-    private IALAsynCallBackTask<T> _m_CallBackTask;
+    private _IALAsynCallBackTask<T> _m_CallBackTask;
     
-    public SynAsynCallBackTask(T _obj, IALAsynCallBackTask<T> _callBackTask)
+    public SynAsynCallBackTask(T _obj, _IALAsynCallBackTask<T> _callBackTask)
     {
         _m_OBJ = _obj;
         _m_CallBackTask = _callBackTask;

@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ALBasicServer.ALTask.IALAsynCallBackTask;
-import ALBasicServer.ALTask.IALAsynCallTask;
-import ALBasicServer.ALTask.IALAsynRunnableTask;
+import ALBasicServer.ALTask._IALAsynCallBackTask;
+import ALBasicServer.ALTask._IALAsynCallTask;
+import ALBasicServer.ALTask._IALAsynRunnableTask;
 
 /**********************
  * 异步任务处理线程中存放本线程需要处理的任务队列的对象
@@ -36,7 +36,7 @@ public class ALAsynThreadTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:01 PM
      */
-    public <T> void regTask(IALAsynCallTask<T> _callObj, IALAsynCallBackTask<T> _callBackObj)
+    public <T> void regTask(_IALAsynCallTask<T> _callObj, _IALAsynCallBackTask<T> _callBackObj)
     {
         ALAsynTaskInfo<T> info = new ALAsynTaskInfo<T>(_callObj, _callBackObj);
         
@@ -54,7 +54,7 @@ public class ALAsynThreadTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:29 PM
      */
-    public <T> void regTask(IALAsynRunnableTask _runTask)
+    public <T> void regTask(_IALAsynRunnableTask _runTask)
     {
         ALAsynTaskInfo<T> info = new ALAsynTaskInfo<T>(_runTask);
         

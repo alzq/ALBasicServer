@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
  * @author alzq.z
  * @time   Feb 19, 2013 10:51:53 AM
  */
-public interface IALProtocolStructure
+public interface _IALProtocolStructure
 {
     /******************
      * 获取主协议编号

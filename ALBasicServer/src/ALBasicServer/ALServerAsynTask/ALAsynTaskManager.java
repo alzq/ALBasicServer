@@ -2,9 +2,9 @@ package ALBasicServer.ALServerAsynTask;
 
 import java.util.ArrayList;
 
-import ALBasicServer.ALTask.IALAsynCallBackTask;
-import ALBasicServer.ALTask.IALAsynCallTask;
-import ALBasicServer.ALTask.IALAsynRunnableTask;
+import ALBasicServer.ALTask._IALAsynCallBackTask;
+import ALBasicServer.ALTask._IALAsynCallTask;
+import ALBasicServer.ALTask._IALAsynRunnableTask;
 import ALBasicServer.ALThread.ALThreadManager;
 
 /***********************
@@ -70,7 +70,7 @@ public class ALAsynTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:01 PM
      */
-    public <T> void regTask(int _threadIdx, IALAsynCallTask<T> _callObj, IALAsynCallBackTask<T> _callBackObj)
+    public <T> void regTask(int _threadIdx, _IALAsynCallTask<T> _callObj, _IALAsynCallBackTask<T> _callBackObj)
     {
         if(_threadIdx > maxIdx || _threadIdx < 0)
             _threadIdx = 0;
@@ -85,7 +85,7 @@ public class ALAsynTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:29 PM
      */
-    public <T> void regTask(int _threadIdx, IALAsynRunnableTask _runTask)
+    public <T> void regTask(int _threadIdx, _IALAsynRunnableTask _runTask)
     {
         if(_threadIdx > maxIdx || _threadIdx < 0)
             _threadIdx = 0;
@@ -100,7 +100,7 @@ public class ALAsynTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:01 PM
      */
-    public <T> void regSysTask(IALAsynCallTask<T> _callObj, IALAsynCallBackTask<T> _callBackObj)
+    public <T> void regSysTask(_IALAsynCallTask<T> _callObj, _IALAsynCallBackTask<T> _callBackObj)
     {
         //注册任务
         _m_tSystemAsynTaskThread._getTaskManager().regTask(_callObj, _callBackObj);
@@ -112,7 +112,7 @@ public class ALAsynTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:29 PM
      */
-    public <T> void regSysTask(IALAsynRunnableTask _runTask)
+    public <T> void regSysTask(_IALAsynRunnableTask _runTask)
     {
         //注册任务
         _m_tSystemAsynTaskThread._getTaskManager().regTask(_runTask);

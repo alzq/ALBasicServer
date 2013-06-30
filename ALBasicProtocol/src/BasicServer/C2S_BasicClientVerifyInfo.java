@@ -1,7 +1,7 @@
 package BasicServer;
 
 import java.nio.ByteBuffer;
-public class C2S_BasicClientVerifyInfo implements ALBasicProtocolPack.IALProtocolStructure {
+public class C2S_BasicClientVerifyInfo implements ALBasicProtocolPack._IALProtocolStructure {
 private String userName;
 private String userPassword;
 
