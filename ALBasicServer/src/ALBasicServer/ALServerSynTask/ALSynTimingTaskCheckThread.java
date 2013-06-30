@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import ALBasicCommon.ALBasicThread;
 import ALBasicServer.ALBasicServerConf;
-import ALBasicServer.ALTask.IALSynTask;
+import ALBasicServer.ALTask._IALSynTask;
 
 public class ALSynTimingTaskCheckThread extends ALBasicThread
 {
@@ -42,7 +42,7 @@ public class ALSynTimingTaskCheckThread extends ALBasicThread
             long nowTime = ALSynTaskManager.getInstance()._refreshTimingTaskLastCheckTime();
 
             //获取需要处理的所有任务队列的队列
-            LinkedList<LinkedList<IALSynTask>> needAddTaskList = 
+            LinkedList<LinkedList<_IALSynTask>> needAddTaskList = 
                     ALSynTaskManager.getInstance().popNeedDealTimingTask(startTime);
             
             if(null != needAddTaskList)

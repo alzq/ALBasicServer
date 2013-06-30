@@ -2,7 +2,7 @@ package ALBasicServer.ALServerSynTask;
 
 import ALBasicCommon.ALBasicThread;
 import ALBasicServer.ALBasicServerConf;
-import ALBasicServer.ALTask.IALSynTask;
+import ALBasicServer.ALTask._IALSynTask;
 import ALBasicServer.ALThread.ALThreadManager;
 import ALBasicServer.ALThread.ALThreadMutexMgr;
 import ALServerLog.ALServerLog;
@@ -51,7 +51,7 @@ public class ALSynTaskDealThread extends ALBasicThread
         {
             //执行任务循环
             //获取当前需要执行的任务，无任务时将等待信号量
-            IALSynTask curTask = ALSynTaskManager.getInstance().PopCurrentTask();
+            _IALSynTask curTask = ALSynTaskManager.getInstance().PopCurrentTask();
             
             if(null != curTask)
             {

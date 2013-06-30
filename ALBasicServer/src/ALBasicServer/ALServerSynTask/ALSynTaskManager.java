@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import ALBasicCommon.ALBasicCommonFun;
 import ALBasicServer.ALBasicServerConf;
-import ALBasicServer.ALTask.IALSynTask;
+import ALBasicServer.ALTask._IALSynTask;
 
 /**********************
  * 架构中的同步任务管理对象，对象中根据不同的任务安排方式进行处理<br>
@@ -29,12 +29,12 @@ public class ALSynTaskManager
     }
     
     /** 当前任务队列由于此队列只从队列头抽取对象，并且仅在队列尾插入对象 */
-    private LinkedList<IALSynTask> _m_lCurrentTaskList;
+    private LinkedList<_IALSynTask> _m_lCurrentTaskList;
     /** 当前任务队列操作锁 */
     private ReentrantLock _m_lCurrentTaskMutex;
     
     /** 定时任务队列，索引为定时的时间值（毫秒） */
-    private HashMap<Long, LinkedList<IALSynTask>> _m_htTimingTaskTable;
+    private HashMap<Long, LinkedList<_IALSynTask>> _m_htTimingTaskTable;
     /** 定时任务队列锁 */
     private ReentrantLock _m_lTimingTaskMutex;
     
@@ -48,10 +48,10 @@ public class ALSynTaskManager
     
     protected ALSynTaskManager()
     {
-        _m_lCurrentTaskList = new LinkedList<IALSynTask>();
+        _m_lCurrentTaskList = new LinkedList<_IALSynTask>();
         _m_lCurrentTaskMutex = new ReentrantLock();
         
-        _m_htTimingTaskTable = new HashMap<Long, LinkedList<IALSynTask>>();
+        _m_htTimingTaskTable = new HashMap<Long, LinkedList<_IALSynTask>>();
         _m_lTimingTaskMutex = new ReentrantLock();
         _m_iTimingTaskCheckTime = ALBasicServerConf.getInstance().getTimerCheckTime();
         
@@ -68,7 +68,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:01:18 PM
      */
-    public void RegTask(IALSynTask _task)
+    public void RegTask(_IALSynTask _task)
     {
         _lockCurrentTaskList();
         
@@ -87,7 +87,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:04:48 PM
      */
-    public void RegTask(IALSynTask _task, int _time)
+    public void RegTask(_IALSynTask _task, int _time)
     {
         _lockTimingTaskList();
         
@@ -106,7 +106,7 @@ public class ALSynTaskManager
         
         _unlockTimingTaskList();
     }
-    public void RegTask(IALSynTask _task, long _time)
+    public void RegTask(_IALSynTask _task, long _time)
     {
         _lockTimingTaskList();
         
@@ -132,7 +132,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:17:58 PM
      */
-    public IALSynTask PopCurrentTask()
+    public _IALSynTask PopCurrentTask()
     {
         _acquireTaskEvent();
         _lockCurrentTaskList();
@@ -145,7 +145,7 @@ public class ALSynTaskManager
         }
         
         //取出并移除任务队列第一个任务
-        IALSynTask task = _m_lCurrentTaskList.removeFirst();
+        _IALSynTask task = _m_lCurrentTaskList.removeFirst();
         
         _unlockCurrentTaskList();
         return task;
@@ -157,7 +157,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:22:52 PM
      */
-    public LinkedList<LinkedList<IALSynTask>> popNeedDealTimingTask(long _startTime)
+    public LinkedList<LinkedList<_IALSynTask>> popNeedDealTimingTask(long _startTime)
     {
         return _popTimerTask(_startTime);
     }
@@ -169,7 +169,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:32:18 PM
      */
-    protected void _RegisterTaskList(LinkedList<IALSynTask> _taskList)
+    protected void _RegisterTaskList(LinkedList<_IALSynTask> _taskList)
     {
         //在循环内加锁有利于大量任务插入时长时间阻塞处理线程的情况
         while(!_taskList.isEmpty())
@@ -258,7 +258,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:06:12 PM
      */
-    protected void _regTimingTask(long _dealTime, IALSynTask _task)
+    protected void _regTimingTask(long _dealTime, _IALSynTask _task)
     {
         //根据时间精度将时间更改为最近的执行时间
         int deltaTime = (int)(_dealTime % _m_iTimingTaskCheckTime);
@@ -271,10 +271,10 @@ public class ALSynTaskManager
         _lockTimingTaskList();
         
         //获取对应处理时间的处理任务队列
-        LinkedList<IALSynTask> taskList = _m_htTimingTaskTable.get(realDealTime);
+        LinkedList<_IALSynTask> taskList = _m_htTimingTaskTable.get(realDealTime);
         if(null == taskList)
         {
-            taskList = new LinkedList<IALSynTask>();
+            taskList = new LinkedList<_IALSynTask>();
             _m_htTimingTaskTable.put(realDealTime, taskList);
         }
         
@@ -289,9 +289,9 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:23:11 PM
      */
-    protected LinkedList<LinkedList<IALSynTask>> _popTimerTask(long _startTime)
+    protected LinkedList<LinkedList<_IALSynTask>> _popTimerTask(long _startTime)
     {
-        LinkedList<LinkedList<IALSynTask>> list = new LinkedList<LinkedList<IALSynTask>>();
+        LinkedList<LinkedList<_IALSynTask>> list = new LinkedList<LinkedList<_IALSynTask>>();
         
         _lockTimingTaskList();
 
@@ -301,7 +301,7 @@ public class ALSynTaskManager
         long time = _startTime;
         while (time <= endTime)
         {
-            LinkedList<IALSynTask> tmpList = _m_htTimingTaskTable.remove(time);
+            LinkedList<_IALSynTask> tmpList = _m_htTimingTaskTable.remove(time);
             
             if(null != tmpList)
                 list.add(tmpList);

@@ -1,9 +1,9 @@
 package ALBasicServer.ALSocket;
 
-import ALBasicServer.ALTask.IALSynTask;
+import ALBasicServer.ALTask._IALSynTask;
 
 
-public class SynReceiveMessageTask implements IALSynTask
+public class SynReceiveMessageTask implements _IALSynTask
 {
     private ALBasicServerSocket _m_csSocket;
     

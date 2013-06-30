@@ -1,8 +1,8 @@
 package ALBasicServer.ALSocket;
 
-import ALBasicServer.ALTask.IALSynTask;
+import ALBasicServer.ALTask._IALSynTask;
 
-public class SynDisconnectTask implements IALSynTask
+public class SynDisconnectTask implements _IALSynTask
 {
     private ALBasicServerSocket _m_csSocket;
     

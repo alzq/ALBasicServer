@@ -7,7 +7,7 @@ package ALBasicServer.ALTask;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 18, 2013 10:50:58 PM
  */
-public interface IALSynTask
+public interface _IALSynTask
 {
     /*****************
      * 任务的执行函数

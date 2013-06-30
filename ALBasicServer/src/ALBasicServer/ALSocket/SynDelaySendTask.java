@@ -1,13 +1,13 @@
 package ALBasicServer.ALSocket;
 
-import ALBasicServer.ALTask.IALSynTask;
+import ALBasicServer.ALTask._IALSynTask;
 
 /******************
  * 当对应Socket无法发送数据时，使用此任务延迟加入发送队列
  * @author alzq
  *
  */
-public class SynDelaySendTask implements IALSynTask
+public class SynDelaySendTask implements _IALSynTask
 {
     private ALBasicServerSocket socket;
     
