@@ -176,6 +176,9 @@ public class ALBasicClientSocket
     {
         if(null == _m_scSocket)
             return ;
+        
+        if(!_m_scSocket.isConnected())
+            return ;
 
         boolean needAddToSendList = false;
         _lockBuf();
