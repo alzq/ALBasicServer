@@ -178,7 +178,10 @@ public class ALBasicClientSocket
             return ;
         
         if(!_m_scSocket.isConnected())
+        {
+            ALBasicSendingClientManager.getInstance().addSendSocket(this);
             return ;
+        }
 
         boolean needAddToSendList = false;
         _lockBuf();
