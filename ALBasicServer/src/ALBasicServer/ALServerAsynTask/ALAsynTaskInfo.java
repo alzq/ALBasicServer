@@ -57,7 +57,14 @@ public class ALAsynTaskInfo<T>
         }
         else
         {
-            _m_tRunObj.run();
+            try
+            {
+                _m_tRunObj.run();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
