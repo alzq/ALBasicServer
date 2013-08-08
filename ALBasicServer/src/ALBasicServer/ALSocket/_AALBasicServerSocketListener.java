@@ -12,7 +12,7 @@ import ALBasicProtocolPack.BasicObj._IALProtocolReceiver;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 19, 2013 11:48:14 AM
  */
-public abstract class ALBasicServerSocketListener implements _IALProtocolReceiver
+public abstract class _AALBasicServerSocketListener implements _IALProtocolReceiver
 {
     /** Socket对象 */
     private ALBasicServerSocket _m_csSocket;

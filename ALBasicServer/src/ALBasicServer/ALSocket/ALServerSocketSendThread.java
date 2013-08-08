@@ -1,6 +1,6 @@
 package ALBasicServer.ALSocket;
 
-import ALBasicCommon.ALBasicThread;
+import ALBasicCommon._AALBasicThread;
 
 
 
@@ -9,7 +9,7 @@ import ALBasicCommon.ALBasicThread;
  * @author alzq
  *
  */
-public class ALServerSocketSendThread extends ALBasicThread
+public class ALServerSocketSendThread extends _AALBasicThread
 {
     /** 线程是否退出 */
     private boolean _m_bThreadExit;

@@ -9,11 +9,11 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-import ALBasicCommon.ALBasicThread;
+import ALBasicCommon._AALBasicThread;
 import ALServerLog.ALServerLog;
 import BasicServer.C2S_BasicClientVerifyInfo;
 
-public class ALBasicClientRecThread extends ALBasicThread
+public class ALBasicClientRecThread extends _AALBasicThread
 {
     /** 线程是否退出 */
     private boolean _m_bThreadExit;

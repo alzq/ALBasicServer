@@ -12,12 +12,12 @@ import ALBasicProtocolPack._IALProtocolStructure;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 19, 2013 10:56:34 AM
  */
-public abstract class ALBasicProtocolSubOrderDealer<T extends _IALProtocolStructure>
+public abstract class _AALBasicProtocolSubOrderDealer<T extends _IALProtocolStructure>
 {
     /** 实例化对象，用于获取信息使用 */
     private T basicInfoObj;
     
-    public ALBasicProtocolSubOrderDealer()
+    public _AALBasicProtocolSubOrderDealer()
     {
         basicInfoObj = _createProtocolObj();
     }

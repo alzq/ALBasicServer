@@ -52,7 +52,7 @@ public class ALAsynTaskInfo<T>
             //添加任务进行回调的处理
             if(null != _m_tCallBackObj)
             {
-                ALSynTaskManager.getInstance().RegTask(new SynAsynCallBackTask<T>(object, _m_tCallBackObj));
+                ALSynTaskManager.getInstance().regTask(new SynAsynCallBackTask<T>(object, _m_tCallBackObj));
             }
         }
         else

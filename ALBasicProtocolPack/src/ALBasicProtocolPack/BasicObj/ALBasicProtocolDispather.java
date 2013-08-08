@@ -13,11 +13,11 @@ import ALBasicCommon.ALBasicCommonFun;
  */
 public class ALBasicProtocolDispather
 {
-    protected ALBasicProtocolMainOrderDealer[] _m_lDealMap;
+    protected _AALBasicProtocolMainOrderDealer[] _m_lDealMap;
     
     public ALBasicProtocolDispather()
     {
-        _m_lDealMap = new ALBasicProtocolMainOrderDealer[256];
+        _m_lDealMap = new _AALBasicProtocolMainOrderDealer[256];
 
         //初始化所有的256个处理对象队列
         for(int i = 0; i < 256; i ++)
@@ -32,7 +32,7 @@ public class ALBasicProtocolDispather
      * @author alzq.z
      * @time   Feb 19, 2013 11:29:20 AM
      */
-    public void RegProtocol(ALBasicProtocolMainOrderDealer _dispathRegister)
+    public void RegProtocol(_AALBasicProtocolMainOrderDealer _dispathRegister)
     {
         int i = ALBasicCommonFun.byte2int(_dispathRegister.getMainOrder());
         _m_lDealMap[i] = _dispathRegister;
@@ -52,7 +52,7 @@ public class ALBasicProtocolDispather
 	    
 	    //获取协议处理对象
 	    int iIndex = ALBasicCommonFun.byte2int(mainOrder);
-	    ALBasicProtocolMainOrderDealer dealer = _m_lDealMap[iIndex];
+	    _AALBasicProtocolMainOrderDealer dealer = _m_lDealMap[iIndex];
 	    
 	    if(null == dealer)
 	        return false;

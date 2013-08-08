@@ -9,12 +9,12 @@ import ALBasicCommon.ALBasicEnum.ThreadStat;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 20, 2013 10:44:51 PM
  */
-public abstract class ALBasicThread extends Thread
+public abstract class _AALBasicThread extends Thread
 {
     /** 线程状态 */
     private ThreadStat _m_eThreadStat;
     
-    public ALBasicThread()
+    public _AALBasicThread()
     {
         _m_eThreadStat = ThreadStat.INIT;
     }

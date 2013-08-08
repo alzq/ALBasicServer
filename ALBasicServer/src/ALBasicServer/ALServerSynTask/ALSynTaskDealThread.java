@@ -1,6 +1,6 @@
 package ALBasicServer.ALServerSynTask;
 
-import ALBasicCommon.ALBasicThread;
+import ALBasicCommon._AALBasicThread;
 import ALBasicServer.ALBasicServerConf;
 import ALBasicServer.ALTask._IALSynTask;
 import ALBasicServer.ALThread.ALThreadManager;
@@ -9,7 +9,7 @@ import ALServerLog.ALServerLog;
 
 
 
-public class ALSynTaskDealThread extends ALBasicThread
+public class ALSynTaskDealThread extends _AALBasicThread
 {
     /** 本线程对应锁信息的存储结构体 */
     private ALThreadMutexMgr _m_tmrThreadMutexMgr;
@@ -22,7 +22,7 @@ public class ALSynTaskDealThread extends ALBasicThread
         _m_bThreadExit = false;
     }
     
-    public void ExitThread()
+    public void exitThread()
     {
         _m_bThreadExit = true;
     }
@@ -51,7 +51,7 @@ public class ALSynTaskDealThread extends ALBasicThread
         {
             //执行任务循环
             //获取当前需要执行的任务，无任务时将等待信号量
-            _IALSynTask curTask = ALSynTaskManager.getInstance().PopCurrentTask();
+            _IALSynTask curTask = ALSynTaskManager.getInstance().popCurrentTask();
             
             if(null != curTask)
             {

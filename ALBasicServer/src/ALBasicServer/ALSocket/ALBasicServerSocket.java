@@ -20,7 +20,7 @@ public class ALBasicServerSocket
     /** 对应的连接对象 */
     private SocketChannel _m_scSocketChannel;
     /** 对应的处理对象 */
-    private ALBasicServerSocketListener _m_clListener;
+    private _AALBasicServerSocketListener _m_clListener;
     /** 验证时传入的用户名 */
     private String _m_sUserName;
     /** 验证时传入的用户密码 */
@@ -68,7 +68,7 @@ public class ALBasicServerSocket
     public long getSocketID() {return _m_ID;}
     public String getUserName() {return _m_sUserName;}
     public String getUserPassword() {return _m_sUserPassword;}
-    public ALBasicServerSocketListener getListener() {return _m_clListener;}
+    public _AALBasicServerSocketListener getListener() {return _m_clListener;}
     public String getIP() {return _m_ConnectIP;}
     public int getPort() {return _m_iConnectPort;}
     
@@ -76,7 +76,7 @@ public class ALBasicServerSocket
      * 设置处理对象
      * @param _listener
      */
-    public void setListener(ALBasicServerSocketListener _listener)
+    public void setListener(_AALBasicServerSocketListener _listener)
     {
         _m_clListener = _listener;
     }
@@ -258,7 +258,7 @@ public class ALBasicServerSocket
             if(needDelaySend)
             {
                 //使用定时任务的定时处理方式进行延迟发送
-                ALSynTaskManager.getInstance().RegTask(new SynDelaySendTask(this), 50);
+                ALSynTaskManager.getInstance().regTask(new SynDelaySendTask(this), 50);
             }
             else
             {
@@ -291,7 +291,7 @@ public class ALBasicServerSocket
         _unlockRecMes();
         
         if(needAddDealTask)
-            ALSynTaskManager.getInstance().RegTask(new SynReceiveMessageTask(this));
+            ALSynTaskManager.getInstance().regTask(new SynReceiveMessageTask(this));
     }
     
     /**********************
@@ -344,7 +344,7 @@ public class ALBasicServerSocket
         _unlockRecMes();
         
         if(needAddDealTask)
-            ALSynTaskManager.getInstance().RegTask(new SynReceiveMessageTask(this));
+            ALSynTaskManager.getInstance().regTask(new SynReceiveMessageTask(this));
     }
     
     /*********************

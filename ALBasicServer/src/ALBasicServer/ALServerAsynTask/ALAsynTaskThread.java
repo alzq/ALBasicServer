@@ -1,6 +1,6 @@
 package ALBasicServer.ALServerAsynTask;
 
-import ALBasicCommon.ALBasicThread;
+import ALBasicCommon._AALBasicThread;
 
 
 /************************
@@ -8,7 +8,7 @@ import ALBasicCommon.ALBasicThread;
  * @author alzq
  *
  */
-public class ALAsynTaskThread extends ALBasicThread
+public class ALAsynTaskThread extends _AALBasicThread
 {
     /** 线程是否退出 */
     private boolean _m_bThreadExit;
@@ -21,7 +21,7 @@ public class ALAsynTaskThread extends ALBasicThread
         _m_tmTaskManager = new ALAsynThreadTaskManager();
     }
 
-    public void ExitThread()
+    public void exitThread()
     {
         _m_bThreadExit = true;
     }

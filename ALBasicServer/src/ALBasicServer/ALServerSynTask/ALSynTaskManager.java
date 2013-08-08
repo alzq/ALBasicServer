@@ -68,7 +68,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:01:18 PM
      */
-    public void RegTask(_IALSynTask _task)
+    public void regTask(_IALSynTask _task)
     {
         _lockCurrentTaskList();
         
@@ -87,14 +87,14 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:04:48 PM
      */
-    public void RegTask(_IALSynTask _task, int _time)
+    public void regTask(_IALSynTask _task, int _time)
     {
         _lockTimingTaskList();
         
         //判断定时时间，当非法，则直接当作当前执行任务插入
         if(_time <= 0)
         {
-            RegTask(_task);
+            regTask(_task);
         }
         else
         {
@@ -106,14 +106,14 @@ public class ALSynTaskManager
         
         _unlockTimingTaskList();
     }
-    public void RegTask(_IALSynTask _task, long _time)
+    public void regTask(_IALSynTask _task, long _time)
     {
         _lockTimingTaskList();
         
         //判断定时时间，当非法，则直接当作当前执行任务插入
         if(_time <= 0)
         {
-            RegTask(_task);
+            regTask(_task);
         }
         else
         {
@@ -132,7 +132,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:17:58 PM
      */
-    public _IALSynTask PopCurrentTask()
+    public _IALSynTask popCurrentTask()
     {
         _acquireTaskEvent();
         _lockCurrentTaskList();
@@ -169,7 +169,7 @@ public class ALSynTaskManager
      * @author alzq.z
      * @time   Feb 18, 2013 11:32:18 PM
      */
-    protected void _RegisterTaskList(LinkedList<_IALSynTask> _taskList)
+    protected void _registerTaskList(LinkedList<_IALSynTask> _taskList)
     {
         //在循环内加锁有利于大量任务插入时长时间阻塞处理线程的情况
         while(!_taskList.isEmpty())

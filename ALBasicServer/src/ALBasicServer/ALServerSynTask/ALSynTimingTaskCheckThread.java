@@ -2,11 +2,11 @@ package ALBasicServer.ALServerSynTask;
 
 import java.util.LinkedList;
 
-import ALBasicCommon.ALBasicThread;
+import ALBasicCommon._AALBasicThread;
 import ALBasicServer.ALBasicServerConf;
 import ALBasicServer.ALTask._IALSynTask;
 
-public class ALSynTimingTaskCheckThread extends ALBasicThread
+public class ALSynTimingTaskCheckThread extends _AALBasicThread
 {
     /** 线程是否退出 */
     private boolean _m_bThreadExit;
@@ -18,7 +18,7 @@ public class ALSynTimingTaskCheckThread extends ALBasicThread
         _m_iCheckTime = ALBasicServerConf.getInstance().getTimerCheckTime();
     }
     
-    public void ExitThread()
+    public void exitThread()
     {
         _m_bThreadExit = true;
     }
@@ -50,7 +50,7 @@ public class ALSynTimingTaskCheckThread extends ALBasicThread
                 while(!needAddTaskList.isEmpty())
                 {
                     //逐个任务的插入到当前任务队列中
-                    ALSynTaskManager.getInstance()._RegisterTaskList(needAddTaskList.removeFirst());
+                    ALSynTaskManager.getInstance()._registerTaskList(needAddTaskList.removeFirst());
                 }
             }
             

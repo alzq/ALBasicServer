@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import ALBasicServer.ALServerAsynTask.ALAsynTaskManager;
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALSocket.ALBasicServerSocket;
-import ALBasicServer.ALSocket.ALBasicServerSocketListener;
+import ALBasicServer.ALSocket._AALBasicServerSocketListener;
 import ALBasicServer.ALSocket.ALServerSocketMgr;
 import BasicServer.S2C_BasicClientVerifyResult;
 
@@ -52,7 +52,7 @@ public class ALVerifyObjMgr
         ALAsynTaskManager.getInstance().regSysTask(new AsynRun_UserLoginTask(serialize, _socket.getUserName(), _socket.getUserPassword()));
         
         //开启定时任务检测是否登录超时，超时则直接按照失败处理
-        ALSynTaskManager.getInstance().RegTask(new SynCheckVerifyLoginTimeOutTask(serialize), 30000);
+        ALSynTaskManager.getInstance().regTask(new SynCheckVerifyLoginTimeOutTask(serialize), 30000);
     }
     
     /*************
@@ -61,7 +61,7 @@ public class ALVerifyObjMgr
      * @author alzq.z
      * @time   Feb 19, 2013 2:41:52 PM
      */
-    protected void _comfirmVerifyResult(int _serialize, ALBasicServerSocketListener _listener)
+    protected void _comfirmVerifyResult(int _serialize, _AALBasicServerSocketListener _listener)
     {
         ALBasicServerSocket socket = m_htVerifySocket.remove(_serialize);
         

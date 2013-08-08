@@ -17,7 +17,7 @@ public class SynDisconnectTask implements _IALSynTask
         if(null == _m_csSocket)
             return ;
         
-        ALBasicServerSocketListener listener = _m_csSocket.getListener();
+        _AALBasicServerSocketListener listener = _m_csSocket.getListener();
         
         if(null == listener)
             return ;

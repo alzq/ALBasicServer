@@ -5,12 +5,12 @@ import java.nio.ByteBuffer;
 import ALBasicProtocolPack._IALProtocolStructure;
 import ALBasicProtocolPack.BasicObj._IALProtocolReceiver;
 
-public abstract class ALBasicClientListener implements _IALProtocolReceiver
+public abstract class _AALBasicClientListener implements _IALProtocolReceiver
 {
     /** 连接的端口对象 */
     private ALBasicClientSocket _m_csClientSocket;
     
-    public ALBasicClientListener(String _serverIP, int _serverPort)
+    public _AALBasicClientListener(String _serverIP, int _serverPort)
     {
         _m_csClientSocket = new ALBasicClientSocket(this, _serverIP, _serverPort);
     }

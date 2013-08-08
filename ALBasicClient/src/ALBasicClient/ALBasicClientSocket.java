@@ -15,7 +15,7 @@ public class ALBasicClientSocket
     /** 对应于服务端的ID */
     private long _m_iClientID;
     /** 对应的处理对象 */
-    private ALBasicClientListener _m_clClient;
+    private _AALBasicClientListener _m_clClient;
     /** 验证时传入的用户名 */
     private String _m_sUserName;
     /** 验证时传入的用户密码 */
@@ -39,7 +39,7 @@ public class ALBasicClientSocket
     private int _m_sBufferLen;
     private ByteBuffer _m_bByteBuffer;
     
-    public ALBasicClientSocket(ALBasicClientListener _client, String _serverIP, int _serverPort)
+    public ALBasicClientSocket(_AALBasicClientListener _client, String _serverIP, int _serverPort)
     {
         _m_iClientID = 0;
         _m_sServerIP = _serverIP;
@@ -64,7 +64,7 @@ public class ALBasicClientSocket
     public boolean getIsLoginIng() {return _m_bLoginIng;}
     public String getUserName() {return _m_sUserName;}
     public String getUserPassword() {return _m_sUserPassword;}
-    public ALBasicClientListener getClient() {return _m_clClient;}
+    public _AALBasicClientListener getClient() {return _m_clClient;}
     
     /**************
      * 判断是否正在连接状态

@@ -6,10 +6,10 @@ import ALServerLog.ALServerLog;
 
 
 @SuppressWarnings("rawtypes")
-public abstract class ALBasicProtocolMainOrderDealer
+public abstract class _AALBasicProtocolMainOrderDealer
 {
 	private byte mainOrder;
-	private ALBasicProtocolSubOrderDealer[] dealArray = null;
+	private _AALBasicProtocolSubOrderDealer[] dealArray = null;
     
 	/*****************
 	 * 带入主协议号以及处理的协议最大的子协议号，进行协议处理队列的初始化
@@ -17,10 +17,10 @@ public abstract class ALBasicProtocolMainOrderDealer
 	 * @author alzq.z
 	 * @time   Feb 19, 2013 10:52:55 AM
 	 */
-    public ALBasicProtocolMainOrderDealer(byte _mainOrder, int _protocolMaxTypeNum)
+    public _AALBasicProtocolMainOrderDealer(byte _mainOrder, int _protocolMaxTypeNum)
     {
         mainOrder = _mainOrder;
-        dealArray = new ALBasicProtocolSubOrderDealer[_protocolMaxTypeNum + 1];
+        dealArray = new _AALBasicProtocolSubOrderDealer[_protocolMaxTypeNum + 1];
     }
     
     /************
@@ -37,7 +37,7 @@ public abstract class ALBasicProtocolMainOrderDealer
      * @author alzq.z
      * @time   Feb 19, 2013 10:52:50 AM
      */
-    public void regDealer(ALBasicProtocolSubOrderDealer _dealer)
+    public void regDealer(_AALBasicProtocolSubOrderDealer _dealer)
     {
         if(null == dealArray)
             return ;
@@ -64,7 +64,7 @@ public abstract class ALBasicProtocolMainOrderDealer
      * @author alzq.z
      * @time   Feb 19, 2013 10:52:50 AM
      */
-    public void setSubDealer(int _subOrderID, ALBasicProtocolSubOrderDealer _dealer)
+    public void setSubDealer(int _subOrderID, _AALBasicProtocolSubOrderDealer _dealer)
     {
         if(null == dealArray)
             return ;

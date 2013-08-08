@@ -96,6 +96,6 @@ public class ALServerSocketMgr
         }
         
         //插入断开连接的处理任务
-        ALSynTaskManager.getInstance().RegTask(new SynDisconnectTask(_socket));
+        ALSynTaskManager.getInstance().regTask(new SynDisconnectTask(_socket));
     }
 }
