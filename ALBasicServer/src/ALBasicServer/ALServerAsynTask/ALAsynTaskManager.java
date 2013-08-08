@@ -85,7 +85,7 @@ public class ALAsynTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:29 PM
      */
-    public <T> void regTask(int _threadIdx, _IALAsynRunnableTask _runTask)
+    public void regTask(int _threadIdx, _IALAsynRunnableTask _runTask)
     {
         if(_threadIdx > maxIdx || _threadIdx < 0)
             _threadIdx = 0;
@@ -112,7 +112,7 @@ public class ALAsynTaskManager
      * @author alzq.z
      * @time   Feb 19, 2013 4:09:29 PM
      */
-    public <T> void regSysTask(_IALAsynRunnableTask _runTask)
+    public void regSysTask(_IALAsynRunnableTask _runTask)
     {
         //注册任务
         _m_tSystemAsynTaskThread._getTaskManager().regTask(_runTask);
