@@ -33,6 +33,17 @@ public class ALBasicCommonFun
     {
         return (_s1 << 16) | _s2;
     }
+    
+    /*****************
+     * 将2个int转化为long对象
+     * 
+     * @author alzq.z
+     * @time   Feb 19, 2013 11:30:30 AM
+     */
+    public static long mergeInt(int _i1, int _i2)
+    {
+        return (((long)_i1) << 32) | _i2;
+    }
 
     public static boolean getBoolean(ByteBuffer buf)
     {
