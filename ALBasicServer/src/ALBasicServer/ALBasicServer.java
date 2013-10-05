@@ -43,6 +43,9 @@ public class ALBasicServer
             ALServerLog.Fatal(ALBasicServerConf.getInstance().getServerTag() + " start initialize...");
             ALServerLog.Fatal("Server Log Level - " + ALServerLog.getLogLevel());
             
+            //开启命令行读取任务
+            ALThreadManager.getInstance().createCmdReadThread();
+            
             //开启定时任务的检测线程
             ALThreadManager.getInstance().createTimingTaskCheckThread();
             
