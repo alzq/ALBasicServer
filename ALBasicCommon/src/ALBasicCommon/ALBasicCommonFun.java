@@ -199,21 +199,21 @@ public class ALBasicCommonFun
     }
     
     /**
-     * 产生一个处于[0,99]之间的随机整数
+     * 产生一个处于区间 0<= x < _iRangeLimit 的随机整数
      * @return
      */
-    public static int getRandomInt()
+    public static int getRandomIntByRange(int _iRangeLimit)
     {
-        return Math.abs(g_randomObj.nextInt(100));
+        return Math.abs(g_randomObj.nextInt(_iRangeLimit));
     }
     
     /**
-     * 产生一个处于[0,Delta]之间的随机整数
+     * 产生一个处于区间 0<= x <= _iRangeLimit 的随机整数
      * @param iDelta
      * @return
      */
-    public static int getRandomInt(int iDelta)
+    public static int getRandomInt(int _iRangeLimit)
     {
-        return Math.abs(g_randomObj.nextInt(iDelta + 1));
+        return Math.abs(g_randomObj.nextInt(_iRangeLimit + 1));
     }
 }
