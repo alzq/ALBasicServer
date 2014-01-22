@@ -3,6 +3,10 @@
 
     ALProtocol C2S_BasicClientVerifyInfo
     {
+	//客户端类型
+	int clientType;
         string userName;
         string userPassword;
+	//附带的自定义信息，可用于检查等信息
+	string customMsg;
     }

@@ -3,6 +3,7 @@
 
     ALProtocol S2C_BasicClientVerifyResult
     {
-        string userName;
         long socketID;
+	//附带的自定义信息，可用于检查等信息
+	string customRetMsg;
     }
