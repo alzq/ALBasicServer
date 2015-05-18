@@ -241,6 +241,16 @@ public class ALBasicCommonFun
     }
     
     /**
+     * 产生一个处于区间 0<= x <= 1 的随机浮点数
+     * @param iDelta
+     * @return
+     */
+    public static float getRandomFloat()
+    {
+        return g_randomObj.nextFloat();
+    }
+    
+    /**
      * 将字节数组转换成十六进制字符串
      * @param iDelta
      * @return
