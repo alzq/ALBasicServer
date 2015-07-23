@@ -207,13 +207,16 @@ public class ALSynTimingTaskNode
         }
         
         //获取第一个长时间间隔任务队列节点，是否匹配下一回合，是则将任务放入
-        ALSynTimingTaskNodeFarDelayTaskInfo farDelayInfo = _m_lFarDelayTaskList.getFirst();
-        if(farDelayInfo.getRound() == _m_iNextRound)
+        if(!_m_lFarDelayTaskList.isEmpty())
         {
-            //从长时间间隔队列删除
-            _m_lFarDelayTaskList.pop();
-            //将任务放入
-            farDelayInfo.popAllSynTask(_m_lNextRoundTimingTaskList);
+            ALSynTimingTaskNodeFarDelayTaskInfo farDelayInfo = _m_lFarDelayTaskList.getFirst();
+            if(farDelayInfo.getRound() == _m_iNextRound)
+            {
+                //从长时间间隔队列删除
+                _m_lFarDelayTaskList.pop();
+                //将任务放入
+                farDelayInfo.popAllSynTask(_m_lNextRoundTimingTaskList);
+            }
         }
     }
     
