@@ -73,7 +73,8 @@ public class ALSynTaskManager
         _m_lTimingTaskMgrStartTime = ALBasicCommonFun.getNowTimeMS();
         //初始化最后一次检测的位置信息
         _m_iLastCheckRound = 0;
-        _m_iLastCheckTick = 0;
+        //从-1开始，避免错过第一个节点
+        _m_iLastCheckTick = -1;
         
         //创建固定区间长度的精度队列
         _m_arrTimingTaskNodeList = new ALSynTimingTaskNode[_m_iTimingTaskCheckAreaSize];
