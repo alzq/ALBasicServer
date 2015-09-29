@@ -84,7 +84,7 @@ public class ALSynTimingTaskNode
                         taskInfo.addSynTask(_task);
                         break;
                     }
-                    else if(taskInfo.getRound() < _round)
+                    else if(taskInfo.getRound() > _round)
                     {
                         //当插入的回合比对应回合早，则需要在对应回合之前插入数据
                         //这里采用的做法是将本节点数据重复插入到下一个节点，之后将本节点设置为新数据
