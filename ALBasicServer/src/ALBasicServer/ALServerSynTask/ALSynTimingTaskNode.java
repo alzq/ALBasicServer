@@ -125,7 +125,7 @@ public class ALSynTimingTaskNode
     }
     
     /***************
-     * 取出所有对应回合的本节点任务
+     * 取出所有对应回合的本节点任务，并将任务滚入下一个回合
      * 
      * @author alzq.z
      * @time   Jul 16, 2015 11:49:51 PM
