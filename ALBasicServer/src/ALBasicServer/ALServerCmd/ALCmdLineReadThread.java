@@ -41,7 +41,19 @@ public class ALCmdLineReadThread extends _AALBasicThread
             }
             
             //添加处理对象
-            ALCmdDealerManager.getInstance().addCmd(cmd);
+            if(null == cmd || cmd.isEmpty())
+            {
+                try
+                {
+                    Thread.sleep(100);
+                } 
+                catch (Exception e)
+                {}
+            }
+            else
+            {
+                ALCmdDealerManager.getInstance().addCmd(cmd);
+            }
         }
     }
 }

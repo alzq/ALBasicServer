@@ -51,6 +51,9 @@ public class ALCmdDealerManager
      */
     public void addCmd(String _cmd)
     {
+        if(null == _cmd || _cmd.length() <= 0)
+            return ;
+        
         //添加到命令行队列中，并判断是否需要开启任务
         _lockCmd();
         
