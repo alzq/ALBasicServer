@@ -90,6 +90,14 @@ public class ALBasicClientSocket
         recThread.start();
     }
     
+    /****************
+     * 断开连接
+     */
+    public void logout()
+    {
+        _logout();
+    }
+    
     /********************
      * 将消息添加到发送队列，等待发送
      * 
