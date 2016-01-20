@@ -28,4 +28,8 @@ public class ALVerifyDealerObj
     {
         ALVerifyObjMgr.getInstance()._comfirmVerifyResult(verifySerialize, _listener);
     }
+    public void comfirmResult(_AALBasicServerSocketListener _listener, String _customRetMsg)
+    {
+        ALVerifyObjMgr.getInstance()._comfirmVerifyResult(verifySerialize, _listener, _customRetMsg);
+    }
 }
