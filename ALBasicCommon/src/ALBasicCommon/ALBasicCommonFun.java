@@ -10,7 +10,7 @@ import java.util.Random;
 public class ALBasicCommonFun
 {
     private static Random g_randomObj = new Random();
-    private static String g_sHexStrIdxString = "0123456789ABCDEF";
+    private static String g_sHexStrIdxString = "0123456789abcdef";
     
     /*****************
      * 将字节转化为int对象

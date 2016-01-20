@@ -90,6 +90,17 @@ public class ALBasicClientSocket
         recThread.start();
     }
     
+    /**************
+     * 断开连接
+     * 
+     * @author alzq.z
+     * @time   2016年1月20日 下午11:34:19
+     */
+    public void logout()
+    {
+        _logout();
+    }
+    
     /********************
      * 将消息添加到发送队列，等待发送
      * 

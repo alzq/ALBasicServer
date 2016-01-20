@@ -16,6 +16,8 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
     }
     
     public ALBasicClientSocket getSocket() {return _m_csClientSocket;}
+    /** 是否有效 */
+    public boolean enable(){return null != _m_csClientSocket;}
 
     /*******************
      * 连接服务器并尝试登录
@@ -31,6 +33,20 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
     {
         _m_csClientSocket.login(_clientType, _userName, _userPassword, _customMsg);
     }
+    
+    /******************
+     * 断开连接
+     * 
+     * @author alzq.z
+     * @time   2016年1月20日 下午11:35:07
+     */
+    public void logout()
+    {
+        if(null == _m_csClientSocket)
+            return ;
+        
+        _m_csClientSocket.logout();
+    }       
     
     /********************
      * 发送消息

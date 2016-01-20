@@ -1,5 +1,6 @@
 package ALBasicClient;
 
+import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALTask._IALSynTask;
 
 /****************
@@ -24,6 +25,7 @@ public class ALSynServerClientDealMessageTask implements _IALSynTask
         if(null == clientListener)
             return ;
         
-        clientListener.dealMessage();
+        if(clientListener.dealMessage())
+            ALSynTaskManager.getInstance().regTask(this);
     }
 }
