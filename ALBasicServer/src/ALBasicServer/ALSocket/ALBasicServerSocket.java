@@ -306,17 +306,17 @@ public class ALBasicServerSocket
     /**********************
      * 消息处理函数，将队列中第一个消息取出并处理。根据取出时消息队列剩余数量决定是否在任务队列末尾添加对应的处理任务<br>
      * 此函数在同步任务中处理
+     * 返回消息代表是否还有消息需要处理
      * 
      * @author alzq.z
      * @time   Feb 19, 2013 2:17:02 PM
      */
-    protected void _dealRecMessage()
+    protected boolean _dealRecMessage()
     {
         if(null == _m_scSocketChannel)
-            return ;
+            return false;
 
         ByteBuffer buf = null;
-        boolean needAddDealTask = false;
         
         _lockRecMes();
 
@@ -343,17 +343,18 @@ public class ALBasicServerSocket
 
         _lockRecMes();
 
-        //必须在处理完成后才删除BUF，否在在处理过程中可能因为插入接收数据导致同时开启第2个任务进行消息处理
-        _m_lRecMessageList.pop();
-        
-        //当需要发送队列不为空时，继续添加发送节点
-        if(!_m_lRecMessageList.isEmpty())
-            needAddDealTask = true;
-        
-        _unlockRecMes();
-        
-        if(needAddDealTask)
-            ALSynTaskManager.getInstance().regTask(new SynReceiveMessageTask(this));
+        try
+        {
+            //必须在处理完成后才删除BUF，否在在处理过程中可能因为插入接收数据导致同时开启第2个任务进行消息处理
+            _m_lRecMessageList.pop();
+            
+            //当需要发送队列不为空时，继续添加发送节点
+            return !_m_lRecMessageList.isEmpty();
+        }
+        finally
+        {
+            _unlockRecMes();
+        }
     }
     
     /*********************

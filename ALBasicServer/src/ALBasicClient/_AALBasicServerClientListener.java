@@ -62,14 +62,14 @@ public abstract class _AALBasicServerClientListener extends _AALBasicClientListe
     
     /******************
      * 自行从消息队列中取出一个消息进行处理
+     * 返回是否需要继续处理消息
      * 
      * @author alzq.z
      * @time   Mar 4, 2013 10:24:27 PM
      */
-    public void dealMessage()
+    public boolean dealMessage()
     {
         ByteBuffer msg = null;
-        boolean needContinueTask = false;
         
         //取出第一个消息
         _lock();
@@ -94,16 +94,17 @@ public abstract class _AALBasicServerClientListener extends _AALBasicClientListe
         
         _lock();
         
-        _m_lMsgList.pop();
-        
-        //判断消息队列是否为空
-        if(!_m_lMsgList.isEmpty())
-            needContinueTask = true;
-        
-        _unlock();
-        
-        if(needContinueTask)
-            ALSynTaskManager.getInstance().regTask(new ALSynServerClientDealMessageTask(this));
+        try
+        {
+            _m_lMsgList.pop();
+            
+            //判断消息队列是否为空
+            return !_m_lMsgList.isEmpty();
+        }
+        finally
+        {
+            _unlock();
+        }
     }
     
     protected void _lock()

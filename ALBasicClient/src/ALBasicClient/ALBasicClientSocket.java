@@ -14,16 +14,16 @@ public class ALBasicClientSocket
 {
     /** 对应于服务端的ID */
     private long _m_iClientID;
-    /** 对应的处理对象 */
+    /** 对应的处理对�*/
     private _AALBasicClientListener _m_clClient;
     /** 是否正在登录 */
     private boolean _m_bLoginIng;
     /** 是否登录成功 */
     private boolean _m_bLoged;
-    /** 连接服务器的IP，端口 */
+    /** 连接服务器的IP，端�*/
     private String _m_sServerIP;
     private int _m_iServerPort;
-    /** 连接的端口对象 */
+    /** 连接的端口对�*/
     private SocketChannel _m_scSocket;
     
     /** 发送队列锁 */
@@ -59,7 +59,7 @@ public class ALBasicClientSocket
     public _AALBasicClientListener getClient() {return _m_clClient;}
     
     /**************
-     * 判断是否正在连接状态
+     * 判断是否正在连接状�
      * 
      * @author alzq.z
      * @time   Mar 17, 2013 10:52:53 PM
@@ -99,7 +99,7 @@ public class ALBasicClientSocket
     }
     
     /********************
-     * 将消息添加到发送队列，等待发送
+     * 将消息添加到发送队列，等待发�
      * 
      * @author alzq.z
      * @time   Feb 19, 2013 9:57:33 PM
@@ -116,7 +116,7 @@ public class ALBasicClientSocket
         if(_m_lSendBufferList.isEmpty())
             needAddToSendList = true;
         
-        //先插入长度数据，后插入实际数据
+        //先插入长度数据，后插入实际数�
         ByteBuffer lenthBuffer = ByteBuffer.allocate(4);
         lenthBuffer.putInt(_buf.remaining());
         lenthBuffer.flip();
@@ -131,7 +131,7 @@ public class ALBasicClientSocket
     }
     
     /****************
-     * 对数据添加临时头的发送方式
+     * 对数据添加临时头的发送方�
      * 
      * @author alzq.z
      * @time   Feb 19, 2013 9:59:13 PM
@@ -148,7 +148,7 @@ public class ALBasicClientSocket
         if(_m_lSendBufferList.isEmpty())
             needAddToSendList = true;
         
-        //先插入长度数据，后插入实际数据
+        //先插入长度数据，后插入实际数�
         ByteBuffer lenthBuffer = ByteBuffer.allocate(4);
         lenthBuffer.putInt(_buf.remaining() + _tmpHeader.remaining());
         lenthBuffer.flip();
@@ -164,8 +164,8 @@ public class ALBasicClientSocket
     }
     
     /**********************
-     * 实际的发送函数，尝试发送尽量多的消息，并判断是否有剩余消息需要发送<br>
-     * 发送完成后判断是否有剩余消息，并在计划队列中添加节点<br>
+     * 实际的发送函数，尝试发送尽量多的消息，并判断是否有剩余消息需要发�br>
+     * 发送完成后判断是否有剩余消息，并在计划队列中添加节�br>
      * 
      * @author alzq.z
      * @time   Feb 19, 2013 9:59:24 PM
@@ -186,7 +186,7 @@ public class ALBasicClientSocket
 
         while(!_m_lSendBufferList.isEmpty())
         {
-            //Socket 允许写入操作时
+            //Socket 允许写入操作�
             ByteBuffer buf = _m_lSendBufferList.getFirst();
 
             if(buf.remaining() <= 0)
@@ -216,7 +216,7 @@ public class ALBasicClientSocket
             }
         }
         
-        //当需要发送队列不为空时，继续添加发送节点
+        //当需要发送队列不为空时，继续添加发送节�
         if(!_m_lSendBufferList.isEmpty())
             needAddToSendList = true;
         
@@ -227,7 +227,7 @@ public class ALBasicClientSocket
     }
     
     /*********************
-     * 接收函数中将接收到的字节放入消息中，根据Socket之前收的残留信息进行一并处理。
+     * 接收函数中将接收到的字节放入消息中，根据Socket之前收的残留信息进行一并处理�
      * 
      * @author alzq.z
      * @time   Feb 19, 2013 10:00:23 PM
@@ -243,16 +243,16 @@ public class ALBasicClientSocket
         {
             ALServerLog.Error("_socketReceivingMessage length is too long, Socket Buffer need more!");
             _m_bByteBuffer.put(_buf.array(), 0, _m_bByteBuffer.remaining());
-            //放置缓冲区读取指针
+            //放置缓冲区读取指�
             _buf.position(_m_bByteBuffer.remaining());
         }
         
         if(0 == _m_sBufferLen)
         {
-            //尚未读取长度前
+            //尚未读取长度�
             if(_m_bByteBuffer.position() >= 4)
             {
-                //当缓冲中字节大于2时可获取对应的消息长度
+                //当缓冲中字节大于2时可获取对应的消息长�
                 _m_sBufferLen = _m_bByteBuffer.getInt(0);
             }
         }
@@ -283,7 +283,7 @@ public class ALBasicClientSocket
             //根据长度设置对应消息长度
             if(bufLen - startPos > 4)
             {
-                //当缓冲中字节大于2时可获取对应的消息长度
+                //当缓冲中字节大于2时可获取对应的消息长�
                 _m_sBufferLen = _m_bByteBuffer.getInt(startPos);
             }
             else
@@ -320,7 +320,7 @@ public class ALBasicClientSocket
     }
     
     /*************
-     * 未登录情况下对返回信息进行处理
+     * 未登录情况下对返回信息进行处�
      * 
      * @author alzq.z
      * @time   Feb 19, 2013 10:02:04 PM
@@ -377,17 +377,17 @@ public class ALBasicClientSocket
     {
         if(_m_bLoged)
         {
-            //已经登录了为退出操作
+            //已经登录了为退出操�
             _m_clClient.Disconnect();
         }
         else if(_m_bLoginIng)
         {
-            //正在登录为连接失败操作
+            //正在登录为连接失败操�
             _m_clClient.ConnectFail();
         }
         else
         {
-            //其他情况为登录失败操作
+            //其他情况为登录失败操�
             _m_clClient.LoginFail();
         }
             
