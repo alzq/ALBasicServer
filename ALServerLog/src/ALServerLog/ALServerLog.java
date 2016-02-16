@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Properties;
 
+import ALBasicCommon.ALBasicCommonFun;
 import ALBasicCommon.ALConfReader;
 
 public class ALServerLog
@@ -130,7 +131,7 @@ public class ALServerLog
     {
         if (g_logLevel.compareTo(lev) <= 0)
         {
-            System.out.println("[" + lev.toString() + "] " + logstr);
+            System.out.println("[" + lev.toString() + "]\t" + ALBasicCommonFun.getNowTimeStr() + "\t" + logstr);
         }
     }
 
