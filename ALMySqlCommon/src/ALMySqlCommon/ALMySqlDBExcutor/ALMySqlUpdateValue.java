@@ -68,6 +68,12 @@ public class ALMySqlUpdateValue
      * @author alzq.z
      * @time   Jan 13, 2014 11:47:13 PM
      */
+    public ALMySqlUpdateValue addValueObj(String _fieldName, boolean _valueBoolean)
+    {
+        _m_lUpdateValueObjList.add(new ALMySqlDBUpdateValueObj(_fieldName, Boolean.toString(_valueBoolean)));
+        
+        return this;
+    }
     public ALMySqlUpdateValue addValueObj(String _fieldName, String _valueStr)
     {
         _m_lUpdateValueObjList.add(new ALMySqlDBUpdateValueObj(_fieldName, _valueStr));

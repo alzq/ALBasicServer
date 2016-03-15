@@ -203,19 +203,33 @@ public class ALBasicCommonFun
     * 获取当前时间信息连接起来的数字
     * @return
     */
-   public static long getNowTimeNum()
-   {
-       Calendar calendar = Calendar.getInstance();
-       
-       long timeNum = calendar.get(Calendar.YEAR);
-       timeNum = (timeNum * 100) + calendar.get(Calendar.MONTH) + 1;
-       timeNum = (timeNum * 100) + calendar.get(Calendar.DAY_OF_MONTH);
-       timeNum = (timeNum * 100) + calendar.get(Calendar.HOUR_OF_DAY);
-       timeNum = (timeNum * 100) + calendar.get(Calendar.MINUTE);
-       timeNum = (timeNum * 100) + calendar.get(Calendar.SECOND);
-       
-       return timeNum;
-   }
+    public static long getNowTimeNum()
+    {
+        Calendar calendar = Calendar.getInstance();
+        
+        long timeNum = calendar.get(Calendar.YEAR);
+        timeNum = (timeNum * 100) + calendar.get(Calendar.MONTH) + 1;
+        timeNum = (timeNum * 100) + calendar.get(Calendar.DAY_OF_MONTH);
+        timeNum = (timeNum * 100) + calendar.get(Calendar.HOUR_OF_DAY);
+        timeNum = (timeNum * 100) + calendar.get(Calendar.MINUTE);
+        timeNum = (timeNum * 100) + calendar.get(Calendar.SECOND);
+        
+        return timeNum;
+    }
+    public static String getNowTimeStr()
+    {
+        Calendar calendar = Calendar.getInstance();
+        
+        StringBuilder stringBuild = new StringBuilder(20);
+        stringBuild.append(calendar.get(Calendar.YEAR)).append("-")
+                        .append(calendar.get(Calendar.MONTH) + 1).append("-")
+                        .append(calendar.get(Calendar.DAY_OF_MONTH)).append(" ")
+                        .append(calendar.get(Calendar.HOUR_OF_DAY)).append(":")
+                        .append(calendar.get(Calendar.MINUTE)).append(":")
+                        .append(calendar.get(Calendar.SECOND));
+        
+        return stringBuild.toString();
+    }
     
     /**
      * 产生一个处于区间 0<= x < _iRangeLimit 的随机整数
