@@ -1,5 +1,6 @@
 package ALBasicCommon;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class ALConfReader
@@ -102,5 +103,58 @@ public class ALConfReader
         System.out.println("[Conf Init] " + _name + " = " + tmpStr);
         
         return value;
+    }
+    
+    /**********************
+     * 读取整形队列配置信息
+     * 
+     * @author alzq.z
+     * @time   Feb 19, 2013 10:54:19 AM
+     */
+    public static ArrayList<Integer> readIntArr(Properties _properties, String _name, ArrayList<Integer> _defaultValue)
+    {
+        ArrayList<Integer> intArr = new ArrayList<Integer>();
+        
+        String tmpStr = _properties.getProperty(_name);
+        if(null != tmpStr && !tmpStr.isEmpty())
+        {
+            //使用“：”拆分数字数组
+            String[] intStrArr = tmpStr.split(":");
+            for(int i = 0; i < intStrArr.length; i++)
+            {
+                intArr.add(Integer.parseInt(intStrArr[i]));
+            }
+            
+            System.out.println("[Conf Init] " + _name + " = " + tmpStr);
+            
+            return intArr;
+        }
+        else
+        {
+            return _defaultValue;
+        }
+    }
+    public static ArrayList<Long> readLongArr(Properties _properties, String _name, ArrayList<Long> _defaultValue)
+    {
+        ArrayList<Long> longArr = new ArrayList<Long>();
+        
+        String tmpStr = _properties.getProperty(_name);
+        if(null != tmpStr && !tmpStr.isEmpty())
+        {
+            //使用“：”拆分数字数组
+            String[] intStrArr = tmpStr.split(":");
+            for(int i = 0; i < intStrArr.length; i++)
+            {
+                longArr.add(Long.parseLong(intStrArr[i]));
+            }
+            
+            System.out.println("[Conf Init] " + _name + " = " + tmpStr);
+            
+            return longArr;
+        }
+        else
+        {
+            return _defaultValue;
+        }
     }
 }
