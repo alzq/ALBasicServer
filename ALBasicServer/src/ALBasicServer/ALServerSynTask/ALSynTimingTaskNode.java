@@ -87,14 +87,16 @@ public class ALSynTimingTaskNode
                     else if(taskInfo.getRound() > _round)
                     {
                         //当插入的回合比对应回合早，则需要在对应回合之前插入数据
-                        //这里采用的做法是将本节点数据重复插入到下一个节点，之后将本节点设置为新数据
-                        iterator.add(taskInfo);
-
+                        //这里采用的做法是将本节点数据设置为新数据，之后将本节点数据插入到下一个节点
                         //创建新节点
                         ALSynTimingTaskNodeFarDelayTaskInfo newInfo = new ALSynTimingTaskNodeFarDelayTaskInfo(_round);
                         iterator.set(newInfo);
                         //插入任务
                         newInfo.addSynTask(_task);
+                        
+                        //将本节点插入下一节点
+                        iterator.add(taskInfo);
+
                         break;
                     }
                 }
