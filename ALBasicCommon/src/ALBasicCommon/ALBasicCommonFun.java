@@ -20,6 +20,24 @@ public class ALBasicCommonFun
      */
     public static int byte2int(byte value) { return (int)value & 0xFF; }
     
+    /************
+     * 根据位置设置对应字节的对应位置值
+     * 
+     * @author alzq.z
+     * @time   2016年5月18日 上午1:31:48
+     */
+    public static byte setByteTag(byte _srcValue, int _pos, boolean _isTrue)
+    {
+        if(_isTrue)
+            return (byte)(_srcValue | (0x01 << _pos));
+        else
+            return (byte)(_srcValue & ~(0x01 << _pos));
+    }
+    public static boolean getByteTag(byte _srcValue, int _pos)
+    {
+        return ((_srcValue & (0x01 << _pos)) != 0);
+    }
+    
     /*****************
      * 将2个short转化为int对象
      * 

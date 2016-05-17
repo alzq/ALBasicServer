@@ -11,6 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import ALBasicCommon.XMLReader.ReadFileFunc._AALXMLReadingIntListObj;
+import ALBasicCommon.XMLReader.ReadFileFunc._AALXMLReadingLongListObj;
 import ALBasicCommon.XMLReader.ReadFileFunc._AALXMLReadingObj;
 
 /************************
@@ -268,5 +269,69 @@ public class ALResXMLFunc
                 );
         
         return intList;
+    }
+    public static ArrayList<Integer> readIntList(String _str)
+    {
+        if(null == _str || _str.isEmpty())
+            return null;
+        
+        ArrayList<Integer> intList = new ArrayList<Integer>();
+        
+        String[] strs = _str.split(":");
+        for(int i = 0; i < strs.length; i++)
+        {
+            if(strs[i].isEmpty())
+                continue;
+            
+            intList.add(Integer.parseInt(strs[i]));
+        }
+        
+        return intList;
+    }
+    public static ArrayList<Long> readLongList(Node _node, String _nodeName)
+    {
+        ArrayList<Long> longList = new ArrayList<Long>();
+        
+        ALResXMLFunc.readXML(
+                _node
+                , longList
+                , new _AALXMLReadingLongListObj(_nodeName)
+                    {
+                        @Override
+                        public boolean readingNode(ArrayList<Long> _longList, Node _node, String _name)
+                        {
+                            return false;
+                        }
+                        
+                        @Override
+                        public void readingNodeValue(ArrayList<Long> _longList, String _name, String _value)
+                        {
+                            if(_name.equalsIgnoreCase(getNodeName()))
+                            {
+                                _longList.add(Long.parseLong(_value));
+                            }
+                        }
+                    }
+                );
+        
+        return longList;
+    }
+    public static ArrayList<Long> readLongList(String _str)
+    {
+        if(null == _str || _str.isEmpty())
+            return null;
+        
+        ArrayList<Long> longList = new ArrayList<Long>();
+        
+        String[] strs = _str.split(":");
+        for(int i = 0; i < strs.length; i++)
+        {
+            if(strs[i].isEmpty())
+                continue;
+            
+            longList.add(Long.parseLong(strs[i]));
+        }
+        
+        return longList;
     }
 }
