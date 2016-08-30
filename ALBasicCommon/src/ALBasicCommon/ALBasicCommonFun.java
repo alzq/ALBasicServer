@@ -249,6 +249,48 @@ public class ALBasicCommonFun
         return stringBuild.toString();
     }
     
+    /**************
+     * 根据新的小时标记划分不同天，并返回日期的标记
+     * @company Isg @author alzq.zhf
+     * 2014年10月8日 下午3:07:14
+     */
+    public static int getDayTagByHourSplit(int _hour)
+    {
+        Calendar calendar = Calendar.getInstance();
+        
+        if(calendar.get(Calendar.HOUR_OF_DAY) < _hour)
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);
+        
+        //拼凑数据，由于月份从0开始，所以需要加1与客户端匹配
+        int tag = calendar.get(Calendar.YEAR);
+        tag = (tag * 100) + calendar.get(Calendar.MONTH) + 1;
+        tag = (tag * 100) + calendar.get(Calendar.DAY_OF_MONTH);
+        
+        return tag;
+    }
+    
+    /**
+     * 根据刷新小时节点，取当前周天
+     * @return
+     */
+    public static int getCurDayOfWeekByHourSplit(int _hour)
+    {
+        Calendar calendar = Calendar.getInstance();
+        
+        if(calendar.get(Calendar.HOUR_OF_DAY) < _hour)
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);
+        
+        int tag = calendar.get(Calendar.DAY_OF_WEEK);
+        
+        //第1天从周日开始
+        if(calendar.getFirstDayOfWeek() == Calendar.SUNDAY)
+            tag -=  1;        
+        if(0 == tag)
+            tag = 7;
+        
+        return tag;
+    }
+    
     /**
      * 产生一个处于区间 0<= x < _iRangeLimit 的随机整数
      * @return
