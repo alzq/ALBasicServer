@@ -10,7 +10,7 @@ import ALServerLog.ALServerLog;
 public abstract class _AALBasicProtocolMainOrderDealer
 {
 	private byte mainOrder;
-	private _AALBasicProtocolSubOrderDealer[] dealArray = null;
+	private _AALBasicProtocolSubOrderNoProtocolDealer[] dealArray = null;
     
 	/*****************
 	 * 带入主协议号以及处理的协议最大的子协议号，进行协议处理队列的初始化
@@ -21,7 +21,7 @@ public abstract class _AALBasicProtocolMainOrderDealer
     public _AALBasicProtocolMainOrderDealer(byte _mainOrder, int _protocolMaxTypeNum)
     {
         mainOrder = _mainOrder;
-        dealArray = new _AALBasicProtocolSubOrderDealer[_protocolMaxTypeNum + 1];
+        dealArray = new _AALBasicProtocolSubOrderNoProtocolDealer[_protocolMaxTypeNum + 1];
     }
     
     /************
@@ -84,7 +84,7 @@ public abstract class _AALBasicProtocolMainOrderDealer
     * @company Isg @author alzq.zhf
     * 2014年11月15日 下午12:08:17
     */
-   public _AALBasicProtocolSubOrderDealer getSubDealer(byte _subOrder)
+   public _AALBasicProtocolSubOrderNoProtocolDealer getSubDealer(byte _subOrder)
    {
        int iIndex = ALBasicCommonFun.byte2int(_subOrder);
        //编号超出数组大小，直接返回失败
@@ -108,7 +108,7 @@ public abstract class _AALBasicProtocolMainOrderDealer
         //获取子协议编号
         byte subType = _msg.get();
         //获取对应处理对象
-        _AALBasicProtocolSubOrderDealer dealer = getSubDealer(subType);
+        _AALBasicProtocolSubOrderNoProtocolDealer dealer = getSubDealer(subType);
 
         //判断处理对象是否有效
         if(null == dealer)
