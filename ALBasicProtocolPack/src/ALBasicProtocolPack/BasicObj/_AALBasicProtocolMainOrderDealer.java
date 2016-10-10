@@ -58,6 +58,20 @@ public abstract class _AALBasicProtocolMainOrderDealer
         
         dealArray[subOrder] = _dealer;
     }
+    public void regDealer(byte _subOrder, _AALBasicProtocolSubOrderNoProtocolDealer _dealer)
+    {
+        if(null == dealArray)
+            return ;
+        
+        int subOrder = ALBasicCommonFun.byte2int(_subOrder);
+        if(subOrder >= dealArray.length)
+        {
+            ALServerLog.Fatal(mainOrder + " Protocol dispather don't have " + subOrder + " size list to save the dealer obj!");
+            return ;
+        }
+        
+        dealArray[subOrder] = _dealer;
+    }
     
     /****************
      * 强制设置指定对象为处理对象
