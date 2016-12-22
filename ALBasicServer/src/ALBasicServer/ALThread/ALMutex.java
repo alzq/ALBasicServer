@@ -86,6 +86,7 @@ public class ALMutex
             if(null == threadMutexMgr)
             {
                 ALServerLog.Fatal("Unreg Thread try to lock mutex");
+                new Exception().printStackTrace();
                 return ;
             }
             
@@ -120,6 +121,7 @@ public class ALMutex
             if(null == threadMutexMgr)
             {
                 ALServerLog.Fatal("Unreg Thread try to unlock mutex");
+                new Exception().printStackTrace();
                 return ;
             }
             
