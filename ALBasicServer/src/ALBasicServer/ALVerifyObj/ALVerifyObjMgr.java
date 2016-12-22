@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ALBasicServer.ALServerAsynTask.ALAsynTaskManager;
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALSocket.ALBasicServerSocket;
-import ALBasicServer.ALSocket._AALBasicServerSocketListener;
 import ALBasicServer.ALSocket.ALServerSocketMgr;
+import ALBasicServer.ALSocket._AALBasicServerSocketListener;
 import BasicServer.S2C_BasicClientVerifyResult;
 
 /******************
@@ -95,7 +94,7 @@ public class ALVerifyObjMgr
         _m_htVerifySocket.put(serialize, _socket);
         
         //开启一个异步任务用于验证Socket的合法性
-        ALAsynTaskManager.getInstance().regSysTask(new AsynRun_UserLoginTask(serialize, _socket));
+        ALSynTaskManager.getInstance().regTask(new SynRun_UserLoginTask(serialize, _socket));
         
         //开启定时任务检测是否登录超时，超时则直接按照失败处理
         ALSynTaskManager.getInstance().regTask(new SynCheckVerifyLoginTimeOutTask(serialize), 30000);

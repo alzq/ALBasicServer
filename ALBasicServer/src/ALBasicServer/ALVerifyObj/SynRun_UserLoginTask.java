@@ -1,7 +1,7 @@
 package ALBasicServer.ALVerifyObj;
 
 import ALBasicServer.ALSocket.ALBasicServerSocket;
-import ALBasicServer.ALTask._IALAsynRunnableTask;
+import ALBasicServer.ALTask._IALSynTask;
 
 
 /****************
@@ -9,12 +9,12 @@ import ALBasicServer.ALTask._IALAsynRunnableTask;
  * @author alzq
  *
  */
-public class AsynRun_UserLoginTask implements _IALAsynRunnableTask
+public class SynRun_UserLoginTask implements _IALSynTask
 {
     private ALVerifyDealerObj _m_vdVerifyDealer;
     private ALBasicServerSocket _m_ssSocketObj;
     
-    public AsynRun_UserLoginTask(int _serialize, ALBasicServerSocket _socketObj)
+    public SynRun_UserLoginTask(int _serialize, ALBasicServerSocket _socketObj)
     {
         _m_vdVerifyDealer = new ALVerifyDealerObj(_serialize);
         _m_ssSocketObj = _socketObj;
