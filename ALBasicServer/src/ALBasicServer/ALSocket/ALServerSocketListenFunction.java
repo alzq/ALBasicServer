@@ -99,6 +99,8 @@ public class ALServerSocketListenFunction
                             ALServerLog.Info("Accept a client connection ");
                             
                             client.configureBlocking(false);
+                            client.socket().setTcpNoDelay(true);
+                            client.socket().setKeepAlive(true);
                             
                             ALBasicServerSocket newSocket = new ALBasicServerSocket(_getSocketID(), verifyObjIdx, client, _recBuffLen);
                             //将对象及其ID注册

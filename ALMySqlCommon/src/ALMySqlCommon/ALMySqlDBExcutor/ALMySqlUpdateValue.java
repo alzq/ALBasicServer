@@ -32,6 +32,14 @@ public class ALMySqlUpdateValue
     {
         return new ALMySqlUpdateValue().addValueObj(_fieldName, _valueLong);
     }
+    public static ALMySqlUpdateValue createObj(String _fieldName, float _valueFloat)
+    {
+        return new ALMySqlUpdateValue().addValueObj(_fieldName, _valueFloat);
+    }
+    public static ALMySqlUpdateValue createObj(String _fieldName, double _valueDouble)
+    {
+        return new ALMySqlUpdateValue().addValueObj(_fieldName, _valueDouble);
+    }
     public static ALMySqlUpdateValue createObj(String _fieldName, byte[] _valueBinary)
     {
         return new ALMySqlUpdateValue().addValueObj(_fieldName, _valueBinary);
@@ -40,26 +48,63 @@ public class ALMySqlUpdateValue
     {
         return new ALMySqlUpdateValue().addValueObj(_fieldName, _valueBinary);
     }
-    
-    protected class ALMySqlDBUpdateValueObj
+    public static ALMySqlUpdateValue createSQLObj(String _fieldName, String _sqlStr)
+    {
+        return new ALMySqlUpdateValue().addValueObj(_fieldName, _sqlStr);
+    }
+
+    protected abstract class _AALMySqlDBUpdateValueObj
     {
         /** 字段名 */
-        private String _m_sFieldName;
+        protected String _m_sFieldName;
         /** 值对应的字符串 */
-        private String _m_sValueStr;
+        protected String _m_sValueStr;
         
-        public ALMySqlDBUpdateValueObj(String _fieldName, String _valueStr)
+        public _AALMySqlDBUpdateValueObj(String _fieldName, String _valueStr)
         {
             _m_sFieldName = _fieldName;
             _m_sValueStr = _valueStr;
         }
+        
+        /** 拼凑功能字符串 */
+        public abstract void appendValueStr(StringBuilder _builder);
+    }
+    protected class ALMySqlDBUpdateValueObj extends _AALMySqlDBUpdateValueObj
+    {
+        public ALMySqlDBUpdateValueObj(String _fieldName, String _valueStr)
+        {
+            super(_fieldName, _valueStr);
+        }
+
+        public void appendValueStr(StringBuilder _builder)
+        {
+            if(null == _builder)
+                return;
+            
+            _builder.append("'").append(_m_sValueStr).append("'");
+        }
+    }
+    protected class ALMySqlDBUpdateSQLValueObj extends _AALMySqlDBUpdateValueObj
+    {
+        public ALMySqlDBUpdateSQLValueObj(String _fieldName, String _valueStr)
+        {
+            super(_fieldName, _valueStr);
+        }
+
+        public void appendValueStr(StringBuilder _builder)
+        {
+            if(null == _builder)
+                return;
+            
+            _builder.append(_m_sValueStr);
+        }
     }
     
-    private ArrayList<ALMySqlDBUpdateValueObj> _m_lUpdateValueObjList;
+    private ArrayList<_AALMySqlDBUpdateValueObj> _m_lUpdateValueObjList;
     
     public ALMySqlUpdateValue()
     {
-        _m_lUpdateValueObjList = new ArrayList<ALMySqlDBUpdateValueObj>();
+        _m_lUpdateValueObjList = new ArrayList<_AALMySqlDBUpdateValueObj>();
     }
     
     /*****************
@@ -116,6 +161,12 @@ public class ALMySqlUpdateValue
         
         return this;
     }
+    public ALMySqlUpdateValue addSQLValueObj(String _fieldName, String _sqlStr)
+    {
+        _m_lUpdateValueObjList.add(new ALMySqlDBUpdateSQLValueObj(_fieldName, _sqlStr));
+        
+        return this;
+    }
     
     /******************
      * 获取Set的字符串信息
@@ -129,7 +180,7 @@ public class ALMySqlUpdateValue
         
         for(int i = 0; i < _m_lUpdateValueObjList.size(); i++)
         {
-            ALMySqlDBUpdateValueObj valueObj = _m_lUpdateValueObjList.get(i);
+            _AALMySqlDBUpdateValueObj valueObj = _m_lUpdateValueObjList.get(i);
             if(null == valueObj)
                 continue;
             
@@ -137,7 +188,8 @@ public class ALMySqlUpdateValue
                 builder.append(",");
             
             //拼凑字符串
-            builder.append(valueObj._m_sFieldName).append("=").append(valueObj._m_sValueStr);
+            builder.append(valueObj._m_sFieldName).append("=");
+            valueObj.appendValueStr(builder);
         }
         
         return builder.toString();

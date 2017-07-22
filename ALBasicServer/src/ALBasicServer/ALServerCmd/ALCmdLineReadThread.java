@@ -37,7 +37,7 @@ public class ALCmdLineReadThread extends _AALBasicThread
             catch (IOException e)
             {
                 e.printStackTrace();
-                continue;
+                return ;
             }
             
             //添加处理对象

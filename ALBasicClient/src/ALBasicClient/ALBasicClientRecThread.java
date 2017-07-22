@@ -70,6 +70,8 @@ public class ALBasicClientRecThread extends _AALBasicThread
             }
 
             _m_SocketChannel.configureBlocking(false);
+            _m_SocketChannel.socket().setTcpNoDelay(true);
+            _m_SocketChannel.socket().setKeepAlive(true);
             _m_SocketChannel.register(clientSelector, SelectionKey.OP_READ);
             
             //发送登录请求
