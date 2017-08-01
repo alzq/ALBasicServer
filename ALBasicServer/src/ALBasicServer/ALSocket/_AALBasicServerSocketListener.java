@@ -54,10 +54,7 @@ public abstract class _AALBasicServerSocketListener implements _IALProtocolRecei
         if(null == _m_csSocket || null == _protocolObj)
             return ;
         
-        //协议打包主体
-        ByteBuffer msg = _protocolObj.makeFullPackage();
-        
-        _m_csSocket.send(msg);
+        _m_csSocket.send(_protocolObj);
     }
     
     /*****************
