@@ -50,6 +50,7 @@ public class ALBasicServerSocket
     /** 缓存读取字节的位置，长度根据配置设置 */
     private int _m_sBufferLen;
     private ByteBuffer _m_bByteBuffer;
+    private ByteBuffer _m_bTmpByteBuffer;
     
     public ALBasicServerSocket(long _id, int _verifyObjIdx, SocketChannel _channel, int _bufLen)
     {
@@ -69,6 +70,7 @@ public class ALBasicServerSocket
         
         _m_sBufferLen = 0;
         _m_bByteBuffer = ByteBuffer.allocate(_bufLen);
+        _m_bTmpByteBuffer = ByteBuffer.allocate(_bufLen);
         _m_bByteBuffer.clear();
     }
     
@@ -466,12 +468,12 @@ public class ALBasicServerSocket
         //如数据经过了操作需要将剩余数据重新拷贝放入缓存
         if(startPos != 0)
         {
-        	ByteBuffer tmpBuf = ByteBuffer.allocate(bufLen - startPos);
-        	tmpBuf.put(_m_bByteBuffer.array(), startPos, bufLen - startPos);
-        	tmpBuf.flip();
+        	_m_bTmpByteBuffer.clear();
+        	_m_bTmpByteBuffer.put(_m_bByteBuffer.array(), startPos, bufLen - startPos);
+        	_m_bTmpByteBuffer.flip();
         	
         	_m_bByteBuffer.clear();
-        	_m_bByteBuffer.put(tmpBuf);
+        	_m_bByteBuffer.put(_m_bTmpByteBuffer);
         }
         
         //如原先缓存数据未完全放入，此时将剩余数据放入
