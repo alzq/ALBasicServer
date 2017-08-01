@@ -78,7 +78,6 @@ public final void makeFullPackage(ByteBuffer _recBuf) {
 	_recBuf.put((byte)0);
 	_recBuf.put((byte)0);
 	PutUnzipBuf(_recBuf);
-	_recBuf.flip();
 }
 public final ByteBuffer makePackage() {
 	int _bufSize = GetBufSize();
