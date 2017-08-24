@@ -2,6 +2,7 @@ package ALBasicServer.ALThread;
 
 import java.util.concurrent.locks.ReentrantLock;
 
+import ALBasicCommon.ALBasicCommonFun;
 import ALBasicServer.ALBasicServerConf;
 import ALServerLog.ALServerLog;
 
@@ -74,6 +75,11 @@ public class ALMutex
      */
     public void lock()
     {
+    	lock(10);
+    }
+    public void lock(long _maxWarningTimeMS)
+    {
+    	long preTime = ALBasicCommonFun.getNowTimeMS();
         //判断是否检查加锁顺序合法性
         if(ALBasicServerConf.getInstance().getCheckMutex())
         {
@@ -100,6 +106,13 @@ public class ALMutex
         {
             //不检测则直接加锁
             _m_lMutex.lock();
+        }
+        
+        //进行时长判断
+        if(_maxWarningTimeMS > 0 && ALBasicCommonFun.getNowTimeMS() - preTime > _maxWarningTimeMS)
+        {
+            ALServerLog.Fatal("Mutex Lock use too much time! time: " + (ALBasicCommonFun.getNowTimeMS() - preTime));
+            new Exception().printStackTrace();
         }
     }
     
