@@ -75,7 +75,7 @@ public class ALMutex
      */
     public void lock()
     {
-    	lock(10);
+    	lock(50);
     }
     public void lock(long _maxWarningTimeMS)
     {
