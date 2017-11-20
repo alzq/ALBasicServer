@@ -373,4 +373,43 @@ public class ALBasicCommonFun
         
         return builder.toString();
     }
+
+    /**
+     * 将字节数组转换成十六进制字符串
+     * @param iDelta
+     * @return
+     */
+    public static byte[] getHexBytes(String _hexStr)
+    {
+        if (null == _hexStr)
+            return null;
+
+        //创建结果数组
+        byte[] res = new byte[_hexStr.length() / 2];
+
+        int pos = 0;
+        //逐个字符进行处理
+        for (int i = 0; i < _hexStr.length(); i++)
+        {
+            char c = _hexStr.charAt(i);
+
+            //查询c所在的索引
+            byte prePos = (byte)g_sHexStrIdxString.indexOf(c);
+
+            //增加索引
+            i++;
+
+            c = _hexStr.charAt(i);
+
+            //查询c所在的索引
+            byte secPos = (byte)g_sHexStrIdxString.indexOf(c);
+
+            //计算具体数值
+            res[pos] = (byte)((prePos << 4) | secPos);
+            //下标加1
+            pos++;
+        }
+
+        return res;
+    }
 }
