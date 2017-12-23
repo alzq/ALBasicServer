@@ -24,10 +24,9 @@ public interface _IALProtocolStructure
      * @time   Jan 15, 2013 9:53:41 PM
      */
     public byte getSubOrder();
-    
-    public int GetUnzipBufSize();
 
-    public int GetZipBufSize();
+    public int GetFullPackBufSize();
+    public int GetBufSize();
 
     /**********
      * 创建完整的数据包，包含协议处理编号部分
@@ -36,6 +35,7 @@ public interface _IALProtocolStructure
      * @time   Feb 25, 2013 10:56:58 PM
      */
     public ByteBuffer makeFullPackage();
+    public void makeFullPackage(ByteBuffer _recBuf);
     public ByteBuffer makePackage();
     public void readPackage(ByteBuffer _buf);
 }

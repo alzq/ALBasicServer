@@ -5,5 +5,5 @@
 	<classpathentry kind="output" path="bin"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ALServerLog"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ALBasicCommon"/>
-	<classpathentry kind="lib" path="./lib/mysql-connector-java-5.1.26-bin.jar"/>
+	<classpathentry kind="lib" path="./lib/mysql-connector-java-5.1.40-bin.jar"/>
 </classpath>

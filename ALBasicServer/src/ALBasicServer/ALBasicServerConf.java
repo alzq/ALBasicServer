@@ -10,7 +10,7 @@ import ALBasicCommon.ALConfReader;
 
 public class ALBasicServerConf
 {
-    private static ALBasicServerConf g_instance;
+    private static ALBasicServerConf g_instance = new ALBasicServerConf();
 
     public static ALBasicServerConf getInstance()
     {

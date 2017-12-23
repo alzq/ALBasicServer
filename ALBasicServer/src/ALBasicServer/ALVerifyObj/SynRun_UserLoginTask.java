@@ -28,7 +28,7 @@ public class SynRun_UserLoginTask implements _IALSynTask
         if(null == verifyFun)
             return ;
         
-        verifyFun.verifyIdentity(_m_vdVerifyDealer, _m_ssSocketObj.getLoginClientType(), _m_ssSocketObj.getUserName()
+        verifyFun.verifyIdentity(_m_vdVerifyDealer, _m_ssSocketObj, _m_ssSocketObj.getLoginClientType(), _m_ssSocketObj.getUserName()
                 , _m_ssSocketObj.getUserPassword(), _m_ssSocketObj.getLoginCustomMsg());
     }
 

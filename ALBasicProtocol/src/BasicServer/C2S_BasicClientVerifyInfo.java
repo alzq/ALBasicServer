@@ -29,7 +29,7 @@ public String getCustomMsg() { return customMsg; }
 public void setCustomMsg(String _customMsg) { customMsg = _customMsg; }
 
 
-public final int GetUnzipBufSize() {
+public final int GetBufSize() {
 	int _size = 4;
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(userName);
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(userPassword);
@@ -38,9 +38,8 @@ public final int GetUnzipBufSize() {
 	return _size;
 }
 
-public final int GetZipBufSize() {
-	int _size = 0;
-	_size += ALBasicProtocolPack.ALProtocolCommon.GetIntZipSize(clientType);
+public final int GetFullPackBufSize() {
+	int _size = 6;
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(userName);
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(userPassword);
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(customMsg);
@@ -57,13 +56,6 @@ public final void ReadUnzipBuf(ByteBuffer _buf) {
 	customMsg = ALBasicProtocolPack.ALProtocolCommon.GetStringFromBuf(_buf);
 }
 
-public final void ReadZipBuf(ByteBuffer _buf) {
-	clientType = ALBasicProtocolPack.ALProtocolCommon.ZipGetIntFromBuf(_buf);
-	userName = ALBasicProtocolPack.ALProtocolCommon.GetStringFromBuf(_buf);
-	userPassword = ALBasicProtocolPack.ALProtocolCommon.GetStringFromBuf(_buf);
-	customMsg = ALBasicProtocolPack.ALProtocolCommon.GetStringFromBuf(_buf);
-}
-
 public final void PutUnzipBuf(ByteBuffer _buf) {
 	_buf.putInt(clientType);
 	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, userName);
@@ -71,15 +63,8 @@ public final void PutUnzipBuf(ByteBuffer _buf) {
 	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, customMsg);
 }
 
-public final void PutZipBuf(ByteBuffer _buf) {
-	ALBasicProtocolPack.ALProtocolCommon.ZipPutIntIntoBuf(_buf, clientType);
-	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, userName);
-	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, userPassword);
-	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, customMsg);
-}
-
 public final ByteBuffer makeFullPackage() {
-	int _bufSize = GetUnzipBufSize() + 2;
+	int _bufSize = GetBufSize() + 2;
 	ByteBuffer _buf = ByteBuffer.allocate(_bufSize);
 	_buf.put((byte)0);
 	_buf.put((byte)0);
@@ -87,8 +72,15 @@ public final ByteBuffer makeFullPackage() {
 	_buf.flip();
 	return _buf;
 }
+public final void makeFullPackage(ByteBuffer _recBuf) {
+	if(null == _recBuf)
+		return ;
+	_recBuf.put((byte)0);
+	_recBuf.put((byte)0);
+	PutUnzipBuf(_recBuf);
+}
 public final ByteBuffer makePackage() {
-	int _bufSize = GetUnzipBufSize();
+	int _bufSize = GetBufSize();
 	ByteBuffer _buf = ByteBuffer.allocate(_bufSize);
 	PutUnzipBuf(_buf);
 	_buf.flip();

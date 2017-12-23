@@ -15,7 +15,7 @@ import ALServerLog.ALServerLog;
  */
 public class ALServerSocketMgr
 {
-    private static ALServerSocketMgr g_instance;
+    private static ALServerSocketMgr g_instance = new ALServerSocketMgr();
     
     public static ALServerSocketMgr getInstance()
     {

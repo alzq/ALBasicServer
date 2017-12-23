@@ -185,9 +185,9 @@ public class ALProtocolCommon
     {
         if (_str != null && _str.length() > 0)
         {
-            byte[] sb = _str.getBytes();
-            _buff.putShort((short) sb.length);
-            _buff.put(sb);
+        	ByteBuffer strBuffer = _g_CharSet.encode(_str);
+            _buff.putShort((short) strBuffer.remaining());
+            _buff.put(strBuffer);
         }
         else
         {
@@ -211,8 +211,7 @@ public class ALProtocolCommon
         String str;
         try
         {
-            CharsetDecoder decoder = _g_CharSet.newDecoder();
-            str = decoder.decode(ByteBuffer.wrap(strbytes)).toString();
+            str = _g_CharSet.decode(ByteBuffer.wrap(strbytes)).toString();
         }
         catch (Exception e)
         {

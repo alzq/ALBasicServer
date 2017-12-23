@@ -21,16 +21,15 @@ public String getCustomRetMsg() { return customRetMsg; }
 public void setCustomRetMsg(String _customRetMsg) { customRetMsg = _customRetMsg; }
 
 
-public final int GetUnzipBufSize() {
+public final int GetBufSize() {
 	int _size = 8;
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(customRetMsg);
 
 	return _size;
 }
 
-public final int GetZipBufSize() {
-	int _size = 0;
-	_size += ALBasicProtocolPack.ALProtocolCommon.GetLongZipSize(socketID);
+public final int GetFullPackBufSize() {
+	int _size = 10;
 	_size += ALBasicProtocolPack.ALProtocolCommon.GetStringBufSize(customRetMsg);
 
 	return _size;
@@ -43,23 +42,13 @@ public final void ReadUnzipBuf(ByteBuffer _buf) {
 	customRetMsg = ALBasicProtocolPack.ALProtocolCommon.GetStringFromBuf(_buf);
 }
 
-public final void ReadZipBuf(ByteBuffer _buf) {
-	socketID = ALBasicProtocolPack.ALProtocolCommon.ZipGetLongFromBuf(_buf);
-	customRetMsg = ALBasicProtocolPack.ALProtocolCommon.GetStringFromBuf(_buf);
-}
-
 public final void PutUnzipBuf(ByteBuffer _buf) {
 	_buf.putLong(socketID);
 	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, customRetMsg);
 }
 
-public final void PutZipBuf(ByteBuffer _buf) {
-	ALBasicProtocolPack.ALProtocolCommon.ZipPutLongIntoBuf(_buf, socketID);
-	ALBasicProtocolPack.ALProtocolCommon.PutStringIntoBuf(_buf, customRetMsg);
-}
-
 public final ByteBuffer makeFullPackage() {
-	int _bufSize = GetUnzipBufSize() + 2;
+	int _bufSize = GetBufSize() + 2;
 	ByteBuffer _buf = ByteBuffer.allocate(_bufSize);
 	_buf.put((byte)0);
 	_buf.put((byte)0);
@@ -67,8 +56,15 @@ public final ByteBuffer makeFullPackage() {
 	_buf.flip();
 	return _buf;
 }
+public final void makeFullPackage(ByteBuffer _recBuf) {
+	if(null == _recBuf)
+		return ;
+	_recBuf.put((byte)0);
+	_recBuf.put((byte)0);
+	PutUnzipBuf(_recBuf);
+}
 public final ByteBuffer makePackage() {
-	int _bufSize = GetUnzipBufSize();
+	int _bufSize = GetBufSize();
 	ByteBuffer _buf = ByteBuffer.allocate(_bufSize);
 	PutUnzipBuf(_buf);
 	_buf.flip();

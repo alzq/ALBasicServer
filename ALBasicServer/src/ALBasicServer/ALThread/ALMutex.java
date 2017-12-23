@@ -2,6 +2,7 @@ package ALBasicServer.ALThread;
 
 import java.util.concurrent.locks.ReentrantLock;
 
+import ALBasicCommon.ALBasicCommonFun;
 import ALBasicServer.ALBasicServerConf;
 import ALServerLog.ALServerLog;
 
@@ -21,12 +22,17 @@ public class ALMutex
     private ReentrantLock _m_lMutex;
     /** 锁对应的优先等级，从0开始，数字越小表示越高级 */
     private int _m_iMutexPriority;
+    /** 加锁成功的时间标记 */
+    private long _m_lLockTimeTag;
+    private int _m_iWarningTime;
     
     public ALMutex(int _mutexLevel)
     {
         /** 锁对象初始化，带入true表示使用公平队列的加解锁排序方式 */
         _m_lMutex = new ReentrantLock(true);
         _m_iMutexPriority = _mutexLevel;
+        _m_lLockTimeTag = 0;
+        _m_iWarningTime = 50;
     }
     
     /****************
@@ -74,6 +80,12 @@ public class ALMutex
      */
     public void lock()
     {
+    	lock(50);
+    }
+    public void lock(int _maxWarningTimeMS)
+    {
+    	_m_lLockTimeTag = ALBasicCommonFun.getNowTimeMS();
+    	_m_iWarningTime = _maxWarningTimeMS;
         //判断是否检查加锁顺序合法性
         if(ALBasicServerConf.getInstance().getCheckMutex())
         {
@@ -101,6 +113,15 @@ public class ALMutex
             //不检测则直接加锁
             _m_lMutex.lock();
         }
+        
+        //进行时长判断
+        if(_m_iWarningTime > 0 && ALBasicCommonFun.getNowTimeMS() - _m_lLockTimeTag > _m_iWarningTime)
+        {
+            ALServerLog.Fatal("Mutex try get Lock use too much time! time: " + (ALBasicCommonFun.getNowTimeMS() - _m_lLockTimeTag));
+            new Exception().printStackTrace();
+        }
+        //更新时间
+    	_m_lLockTimeTag = ALBasicCommonFun.getNowTimeMS();
     }
     
     /******************
@@ -127,6 +148,11 @@ public class ALMutex
             
             if(threadMutexMgr.tryUnlock(this))
             {
+            	if(_m_lLockTimeTag > 0 && ALBasicCommonFun.getNowTimeMS() - _m_lLockTimeTag > _m_iWarningTime)
+                {
+                    ALServerLog.Fatal("Mutex Lock process use too much time! time: " + (ALBasicCommonFun.getNowTimeMS() - _m_lLockTimeTag));
+                    new Exception().printStackTrace();
+                }
                 //仅当加锁成功后才进行解锁操作
                 _m_lMutex.unlock();
             }

@@ -6,6 +6,7 @@ import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
 
+import ALBasicProtocolPack._IALProtocolStructure;
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALVerifyObj.ALVerifyObjMgr;
 import ALServerLog.ALServerLog;
@@ -49,6 +50,7 @@ public class ALBasicServerSocket
     /** 缓存读取字节的位置，长度根据配置设置 */
     private int _m_sBufferLen;
     private ByteBuffer _m_bByteBuffer;
+    private ByteBuffer _m_bTmpByteBuffer;
     
     public ALBasicServerSocket(long _id, int _verifyObjIdx, SocketChannel _channel, int _bufLen)
     {
@@ -68,6 +70,7 @@ public class ALBasicServerSocket
         
         _m_sBufferLen = 0;
         _m_bByteBuffer = ByteBuffer.allocate(_bufLen);
+        _m_bTmpByteBuffer = ByteBuffer.allocate(_bufLen);
         _m_bByteBuffer.clear();
     }
     
@@ -107,6 +110,40 @@ public class ALBasicServerSocket
      * @author alzq.z
      * @time   Feb 19, 2013 1:42:24 PM
      */
+    public void send(_IALProtocolStructure _protocolObj)
+    {
+        if(null == _m_scSocketChannel || null == _protocolObj)
+            return ;
+        
+        boolean needAddToSendList = false;
+        _lockBuf();
+        
+        //判断当前队列是否有剩余协议
+        //当当前无发送消息存在于队列中时，需要将socket添加到对应发送队列中
+        if(_m_lSendBufferList.isEmpty())
+            needAddToSendList = true;
+        
+        //先插入长度数据，后插入实际数据
+        int protocolSize = _protocolObj.GetFullPackBufSize();
+        ByteBuffer fullBuffer = ByteBuffer.allocate(4 + protocolSize);
+        fullBuffer.putInt(protocolSize);
+        _protocolObj.makeFullPackage(fullBuffer);
+        fullBuffer.flip();
+        
+        _m_lSendBufferList.add(fullBuffer);
+        
+        _unlockBuf();
+        
+        if(needAddToSendList)
+            ALServerSendSocketMgr.getInstance().addSendSocket(this);
+    }
+    
+    /********************
+     * 将消息添加到发送队列，等待发送
+     * 
+     * @author alzq.z
+     * @time   Feb 19, 2013 1:42:24 PM
+     */
     public void send(ByteBuffer _buf)
     {
         if(null == _m_scSocketChannel || null == _buf || _buf.remaining() == 0)
@@ -121,12 +158,12 @@ public class ALBasicServerSocket
             needAddToSendList = true;
         
         //先插入长度数据，后插入实际数据
-        ByteBuffer lenthBuffer = ByteBuffer.allocate(4);
-        lenthBuffer.putInt(_buf.remaining());
-        lenthBuffer.flip();
+        ByteBuffer fullBuffer = ByteBuffer.allocate(4 + _buf.remaining());
+        fullBuffer.putInt(_buf.remaining());
+        fullBuffer.put(_buf);
+        fullBuffer.flip();
         
-        _m_lSendBufferList.add(lenthBuffer);
-        _m_lSendBufferList.add(_buf);
+        _m_lSendBufferList.add(fullBuffer);
         
         _unlockBuf();
         
@@ -154,13 +191,13 @@ public class ALBasicServerSocket
             needAddToSendList = true;
         
         //先插入长度数据，后插入实际数据
-        ByteBuffer lenthBuffer = ByteBuffer.allocate(4);
-        lenthBuffer.putInt(_buf.remaining() + _tmpHeader.remaining());
-        lenthBuffer.flip();
+        ByteBuffer fullBuffer = ByteBuffer.allocate(4 + _buf.remaining() + _tmpHeader.remaining());
+        fullBuffer.putInt(_buf.remaining() + _tmpHeader.remaining());
+        fullBuffer.put(_tmpHeader);
+        fullBuffer.put(_buf);
+        fullBuffer.flip();
         
-        _m_lSendBufferList.add(lenthBuffer);
-        _m_lSendBufferList.add(_tmpHeader);
-        _m_lSendBufferList.add(_buf);
+        _m_lSendBufferList.add(fullBuffer);
         
         _unlockBuf();
         
@@ -431,12 +468,12 @@ public class ALBasicServerSocket
         //如数据经过了操作需要将剩余数据重新拷贝放入缓存
         if(startPos != 0)
         {
-        	ByteBuffer tmpBuf = ByteBuffer.allocate(bufLen - startPos);
-        	tmpBuf.put(_m_bByteBuffer.array(), startPos, bufLen - startPos);
-        	tmpBuf.flip();
+        	_m_bTmpByteBuffer.clear();
+        	_m_bTmpByteBuffer.put(_m_bByteBuffer.array(), startPos, bufLen - startPos);
+        	_m_bTmpByteBuffer.flip();
         	
         	_m_bByteBuffer.clear();
-        	_m_bByteBuffer.put(tmpBuf);
+        	_m_bByteBuffer.put(_m_bTmpByteBuffer);
         }
         
         //如原先缓存数据未完全放入，此时将剩余数据放入

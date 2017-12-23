@@ -16,7 +16,7 @@ import ALBasicCommon.ALConfReader;
  */
 public class ALBasicClientConf
 {
-    private static ALBasicClientConf g_instance;
+    private static ALBasicClientConf g_instance = new ALBasicClientConf();
 
     public static ALBasicClientConf getInstance()
     {

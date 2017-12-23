@@ -73,7 +73,7 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
         if(null == _m_csClientSocket || null == _protocolObj)
             return ;
         
-        _m_csClientSocket.send(_protocolObj.makeFullPackage());
+        _m_csClientSocket.send(_protocolObj);
     }
 
     /****************
