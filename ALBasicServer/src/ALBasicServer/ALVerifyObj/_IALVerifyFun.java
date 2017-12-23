@@ -1,5 +1,7 @@
 package ALBasicServer.ALVerifyObj;
 
+import ALBasicServer.ALSocket.ALBasicServerSocket;
+
 public interface _IALVerifyFun
 {
     /*******************
@@ -8,6 +10,6 @@ public interface _IALVerifyFun
      * @author alzq.z
      * @time   Feb 19, 2013 4:18:12 PM
      */
-    public abstract void verifyIdentity(ALVerifyDealerObj _verifyDealer, int _clientType, String _userName
+    public abstract void verifyIdentity(ALVerifyDealerObj _verifyDealer, ALBasicServerSocket _socket, int _clientType, String _userName
             , String _userPassword, String _customMsg);
 }
