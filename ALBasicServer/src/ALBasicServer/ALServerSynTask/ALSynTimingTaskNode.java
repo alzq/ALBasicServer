@@ -82,7 +82,7 @@ public class ALSynTimingTaskNode
                     {
                         //匹配回合则加入本节点
                         taskInfo.addSynTask(_task);
-                        break;
+                        return true;
                     }
                     else if(taskInfo.getRound() > _round)
                     {
@@ -97,20 +97,16 @@ public class ALSynTimingTaskNode
                         //将本节点插入下一节点
                         iterator.add(taskInfo);
 
-                        break;
+                        return true;
                     }
                 }
-                
-                //判断是否已经到了最后节点
-                if(!iterator.hasNext())
-                {
-                    //在最后节点则往最后追加数据
-                    //创建新节点
-                    ALSynTimingTaskNodeFarDelayTaskInfo newInfo = new ALSynTimingTaskNodeFarDelayTaskInfo(_round);
-                    iterator.add(newInfo);
-                    //插入任务
-                    newInfo.addSynTask(_task);
-                }
+
+                //在最后节点则往最后追加数据
+                //创建新节点
+                ALSynTimingTaskNodeFarDelayTaskInfo newInfo = new ALSynTimingTaskNodeFarDelayTaskInfo(_round);
+                iterator.add(newInfo);
+                //插入任务
+                newInfo.addSynTask(_task);
                 
                 return true;
             }
