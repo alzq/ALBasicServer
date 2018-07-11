@@ -201,8 +201,7 @@ public class ALBasicCommonFun
      */
     public static int getNowTime()
     {
-        Calendar calendar = Calendar.getInstance();
-        int iNowTime = (int) (calendar.getTimeInMillis() / 1000);
+        int iNowTime = (int) (System.currentTimeMillis() / 1000);
         
         return iNowTime;
     }
@@ -213,8 +212,7 @@ public class ALBasicCommonFun
      */
     public static long getNowTimeMS()
     {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTimeInMillis();
+        return System.currentTimeMillis();
     }
     
     /**
