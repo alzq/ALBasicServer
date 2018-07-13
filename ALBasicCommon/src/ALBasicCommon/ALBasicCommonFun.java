@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -409,5 +410,27 @@ public class ALBasicCommonFun
         }
 
         return res;
+    }
+    
+    /********************
+     * 拷贝队列
+     */
+    public static <T> void addAllList(ArrayList<T> _srcList, ArrayList<T> _tarList)
+    {
+    	if(null == _srcList || null == _tarList)
+    		return ;
+    	
+    	if(_srcList.size() > 1024)
+    	{
+    		_tarList.addAll(_srcList);
+    	}
+    	else
+    	{
+    		//逐个拷贝
+    		for(int i = 0; i < _srcList.size(); i++)
+    		{
+    			_tarList.add(_srcList.get(i));
+    		}
+    	}
     }
 }
