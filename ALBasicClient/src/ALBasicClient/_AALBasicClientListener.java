@@ -57,21 +57,30 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
     public void send(ByteBuffer _buffer)
     {
         if(null == _m_csClientSocket)
+        {
+        	_onSendProtocolFail(_buffer);
             return ;
+        }
         
         _m_csClientSocket.send(_buffer);
     }
     public void send(ByteBuffer _tmpHeader, ByteBuffer _buffer)
     {
         if(null == _m_csClientSocket)
+        {
+        	_onSendProtocolFail(_tmpHeader, _buffer);
             return ;
+        }
         
         _m_csClientSocket.send(_tmpHeader, _buffer);
     }
     public void send(_IALProtocolStructure _protocolObj)
     {
         if(null == _m_csClientSocket || null == _protocolObj)
+        {
+        	_onSendProtocolFail(_protocolObj);
             return ;
+        }
         
         _m_csClientSocket.send(_protocolObj);
     }
@@ -111,4 +120,11 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
      * @time   Feb 19, 2013 10:05:11 PM
      */
     public abstract void LoginSuc(String _customRetMsg);
+    /**************
+     * 消息发送失败时的事件函数
+     * @param _buffer
+     */
+    protected abstract void _onSendProtocolFail(ByteBuffer _buffer);
+    protected abstract void _onSendProtocolFail(ByteBuffer _tmpHeader, ByteBuffer _buffer);
+    protected abstract void _onSendProtocolFail(_IALProtocolStructure _protocolObj);
 }
