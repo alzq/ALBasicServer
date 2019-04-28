@@ -1,6 +1,6 @@
 package ALBasicServer.ALServerSynTask;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 import ALBasicServer.ALBasicServerConf;
 import ALBasicServer.ALTask._IALSynTask;
 import ALBasicServer.ALThread.ALThreadManager;
@@ -18,6 +18,8 @@ public class ALSynTaskDealThread extends _AALBasicThread
     
     public ALSynTaskDealThread()
     {
+		super(true);
+		
         _m_tmrThreadMutexMgr  = null;
         _m_bThreadExit = false;
     }

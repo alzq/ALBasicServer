@@ -1,6 +1,6 @@
 package ALBasicClient;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 
 /************************
  * 消息发送线程对象
@@ -9,13 +9,15 @@ import ALBasicCommon._AALBasicThread;
  * @email  zhuangfan@vip.163.com
  * @time   Feb 19, 2013 9:54:05 PM
  */
-public class CosClientSocketSendThread extends _AALBasicThread
+public class ALBasicClientSocketSendThread extends _AALBasicThread
 {
     /** 线程是否退出 */
     private boolean _m_bThreadExit;
     
-    public CosClientSocketSendThread()
+    public ALBasicClientSocketSendThread()
     {
+    	super(true);
+    	
         _m_bThreadExit = false;
     }
 

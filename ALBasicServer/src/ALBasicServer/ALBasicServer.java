@@ -4,6 +4,7 @@ import ALBasicServer.ALServerAsynTask.ALAsynTaskManager;
 import ALBasicServer.ALSocket.ALServerSocketListenFunction;
 import ALBasicServer.ALThread.ALThreadManager;
 import ALBasicServer.ALVerifyObj._IALVerifyFun;
+import ALMySqlCommon.ALMySqlDBExcutor.ALMySqlDBExcutor;
 import ALServerLog.ALServerLog;
 
 public class ALBasicServer
@@ -87,6 +88,9 @@ public class ALBasicServer
             ALServerLog.Fatal("Can not Use The Null VerifyObj!");
             return ;
         }
+        
+        //设置需要检测数据库调用线程
+        ALMySqlDBExcutor.setNeedCheckThread();
         
         ALServerSocketListenFunction.startServer(_port, _recBuffLen, _verifyObj);
     }

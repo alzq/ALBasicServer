@@ -32,7 +32,7 @@ public class ALBasicClientSendThreadMgr
      */
     public void createSocketSendThread()
     {
-        CosClientSocketSendThread socketSendThread = new CosClientSocketSendThread();
+        ALBasicClientSocketSendThread socketSendThread = new ALBasicClientSocketSendThread();
         //开启线程
         socketSendThread.start();
     }

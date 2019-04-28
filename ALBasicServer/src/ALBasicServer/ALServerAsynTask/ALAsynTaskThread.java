@@ -1,6 +1,6 @@
 package ALBasicServer.ALServerAsynTask;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 
 
 /************************
@@ -17,6 +17,8 @@ public class ALAsynTaskThread extends _AALBasicThread
     
     public ALAsynTaskThread()
     {
+		super(false);
+		
         _m_bThreadExit = false;
         _m_tmTaskManager = new ALAsynThreadTaskManager();
     }

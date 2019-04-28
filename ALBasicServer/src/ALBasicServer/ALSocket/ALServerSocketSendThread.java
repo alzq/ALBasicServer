@@ -1,6 +1,6 @@
 package ALBasicServer.ALSocket;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 
 
 
@@ -16,6 +16,8 @@ public class ALServerSocketSendThread extends _AALBasicThread
     
     public ALServerSocketSendThread()
     {
+		super(true);
+		
         _m_bThreadExit = false;
     }
 

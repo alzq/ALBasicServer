@@ -8,9 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import ALBasicCommon.Thread.ALBasicThreadMgr;
+import ALBasicCommon.Thread._AALBasicThread;
 import ALMySqlCommon.ALMySqlDBConditionObj;
 import ALMySqlCommon.ALMySqlCommonObj._IALMySqlBaseDBBO;
 import ALMySqlCommon.ALMySqlCommonObj.ALMySqlConnectionPool._AALMySqlBaseDBObj;
+import ALServerLog.ALServerLog;
 
 /*********************
  * 数据库操作对象
@@ -23,11 +26,40 @@ public class ALMySqlDBExcutor
 {
     private static byte[] emptyBinary = new byte[0];
     
+    private static boolean _g_bNeedCheckThread = false;
+    public static void setNeedCheckThread(){_g_bNeedCheckThread = true;}
+    /**********
+     * 获取当前线程是否需要立即响应的线程，如是则输出日志错误
+     * @return
+     */
+    protected static void _checkIsImdThread()
+    {
+    	if(!_g_bNeedCheckThread)
+    		return ;
+    	
+    	_AALBasicThread threadInfo = ALBasicThreadMgr.getCurThreadInfo();
+    	if(null == threadInfo)
+    		return ;
+    	
+    	if(threadInfo.isImd())
+    	{
+    		//输出日志错误
+            ALServerLog.Fatal("===========================================");
+            ALServerLog.Fatal("========  在需要立即响应的线程调用数据库操作！！！ =======");
+            ALServerLog.Fatal("===========================================");
+            
+            new Exception().printStackTrace();
+    	}
+    }
+    
     /**
      * 插入BO对象函数
      */
     public static boolean InsertBO(_AALMySqlBaseDBObj _dbObj, _IALMySqlBaseDBBO _bo)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         PreparedStatement stmt = null;
         String SQL = null;
@@ -76,6 +108,9 @@ public class ALMySqlDBExcutor
     }
     public static boolean InsertBO(_AALMySqlBaseDBObj _dbObj, _IALMySqlBaseDBBO _bo, ArrayList<byte[]> _binaryList)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         PreparedStatement stmt = null;
         String SQL = null;
@@ -137,6 +172,9 @@ public class ALMySqlDBExcutor
     }
     public static int ReplaceBO(_AALMySqlBaseDBObj _dbObj, _IALMySqlBaseDBBO _bo)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         Statement stmt = null;
         String SQL = null;
@@ -182,6 +220,9 @@ public class ALMySqlDBExcutor
     public static long getCountByCondition(_AALMySqlBaseDBObj _dbObj,
             ALMySqlDBConditionObj _conditionObj, _IALMySqlBaseDBBO _bo)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -241,6 +282,9 @@ public class ALMySqlDBExcutor
     public static List getListByCondition(_AALMySqlBaseDBObj _dbObj,
             ALMySqlDBConditionObj _conditionObj, _IALMySqlBaseDBBO _bo)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         List res = new ArrayList<_IALMySqlBaseDBBO>();
         Connection con = null;
         Statement stmt = null;
@@ -306,6 +350,9 @@ public class ALMySqlDBExcutor
     public static int updateByCondition(_AALMySqlBaseDBObj _dbObj,
             ALMySqlDBConditionObj _conditionObj, String _updateStr)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         Statement stmt = null;
         String SQL = null;
@@ -345,6 +392,9 @@ public class ALMySqlDBExcutor
     public static int updateByCondition(_AALMySqlBaseDBObj _dbObj,
             ALMySqlDBConditionObj _conditionObj, String _updateStr, ArrayList<byte[]> _binaryList)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         PreparedStatement stmt = null;
         String SQL = null;
@@ -404,6 +454,9 @@ public class ALMySqlDBExcutor
     public static int delByCondition(_AALMySqlBaseDBObj _dbObj,
             ALMySqlDBConditionObj _conditionObj)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         Statement stmt = null;
         String SQL = null;
@@ -449,6 +502,9 @@ public class ALMySqlDBExcutor
      */
     public static boolean isTableExist(_AALMySqlBaseDBObj _dbObj, String _tableName)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -568,6 +624,9 @@ public class ALMySqlDBExcutor
     
     public static boolean execute(String sql, _AALMySqlBaseDBObj _dbObj)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         Connection conn = null;
         Statement stmt = null;
 
@@ -617,6 +676,9 @@ public class ALMySqlDBExcutor
      */
     public static int executeUpdate(String sql, _AALMySqlBaseDBObj _dbObj)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         int dealCount = 0;
         Connection conn = null;
         Statement stmt = null;
@@ -653,6 +715,9 @@ public class ALMySqlDBExcutor
     public static int executeInsert(String sql, _AALMySqlBaseDBObj _dbObj)
             throws SQLException
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         int lastID = 0;
 
         Connection conn = null;
@@ -706,6 +771,9 @@ public class ALMySqlDBExcutor
      */
     public static List<Integer> getFirstNumList(String sql, _AALMySqlBaseDBObj _dbObj)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         List<Integer> lstID = new ArrayList<Integer>();
         
         Connection conn = null;
@@ -758,6 +826,9 @@ public class ALMySqlDBExcutor
     @SuppressWarnings("rawtypes")
     public static List executeQuery(String _sql, _AALMySqlBaseDBObj _dbObj, _IALMySqlBaseDBBO _bo)
     {
+    	//检测线程
+    	_checkIsImdThread();
+    	
         List listResult = new ArrayList<_IALMySqlBaseDBBO>();
         
         Statement stmt = null;

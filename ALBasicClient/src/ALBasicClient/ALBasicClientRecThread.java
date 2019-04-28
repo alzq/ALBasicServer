@@ -9,7 +9,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 import ALServerLog.ALServerLog;
 import BasicServer.C2S_BasicClientVerifyInfo;
 
@@ -31,6 +31,8 @@ public class ALBasicClientRecThread extends _AALBasicThread
     
     public ALBasicClientRecThread(int _clientType, String _userName, String _userPassword, String _customMsg, ALBasicClientSocket _socket, String _serverIP, int _serverPort)
     {
+    	super(true);
+    	
         _m_iClientType = _clientType;
         _m_sUserName = _userName;
         _m_sUserPassword = _userPassword;

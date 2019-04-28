@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 
 /**********************
  * 命令行的读取线程
@@ -15,7 +15,12 @@ import ALBasicCommon._AALBasicThread;
  */
 public class ALCmdLineReadThread extends _AALBasicThread
 {
-    /******************
+    public ALCmdLineReadThread() 
+    {
+		super(false);
+	}
+
+	/******************
      * 线程执行函数
      * 
      * @author alzq.z

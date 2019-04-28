@@ -2,7 +2,7 @@ package ALBasicServer.ALServerSynTask;
 
 import java.util.LinkedList;
 
-import ALBasicCommon._AALBasicThread;
+import ALBasicCommon.Thread._AALBasicThread;
 import ALBasicServer.ALTask._IALSynTask;
 
 public class ALSynTimingTaskCheckThread extends _AALBasicThread
@@ -13,6 +13,8 @@ public class ALSynTimingTaskCheckThread extends _AALBasicThread
     
     public ALSynTimingTaskCheckThread()
     {
+		super(true);
+		
         _m_bThreadExit = false;
         _m_iCheckTime = ALSynTaskManager.getInstance().getTaskCheckTime();
     }

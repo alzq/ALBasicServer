@@ -1,4 +1,4 @@
-package ALBasicCommon;
+package ALBasicCommon.Thread;
 
 import ALBasicCommon.ALBasicEnum.ThreadStat;
 
@@ -11,15 +11,23 @@ import ALBasicCommon.ALBasicEnum.ThreadStat;
  */
 public abstract class _AALBasicThread extends Thread
 {
+	//线程Id
+	private long _m_lThreadId;
+	
     /** 线程状态 */
     private ThreadStat _m_eThreadStat;
+    /** 是否需要即时响应任务 */
+    private boolean _m_bIsImdThread;
     
-    public _AALBasicThread()
+    public _AALBasicThread(boolean _isSyn)
     {
         _m_eThreadStat = ThreadStat.INIT;
+        _m_bIsImdThread = _isSyn;
     }
     
+    public long getThreadId() {return _m_lThreadId;}
     public ThreadStat getThreadStat() {return _m_eThreadStat;}
+    public boolean isImd() {return _m_bIsImdThread;}
     
     /******************
      * 线程执行函数
@@ -31,8 +39,14 @@ public abstract class _AALBasicThread extends Thread
     {
         _m_eThreadStat = ThreadStat.RUNNING;
         
+        //获得当前线程ID
+        _m_lThreadId = Thread.currentThread().getId();
+        ALBasicThreadMgr.getInstance().regThread(this);
+        
         _run();
 
+        //注销自己
+        ALBasicThreadMgr.getInstance().unregThread(this);
         _m_eThreadStat = ThreadStat.STOP;
     }
     

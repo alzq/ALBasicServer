@@ -7,5 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ALBasicProtocolPack"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ALBasicProtocol"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ALBasicClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ALMySqlCommon"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
