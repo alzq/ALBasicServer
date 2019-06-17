@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_201/lib/tools.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ALJavaAgent"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0/lib/tools.jar"/>
+	<classpathentry kind="lib" path="./lib/ALJavaAgent.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

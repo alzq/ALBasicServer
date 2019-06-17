@@ -137,10 +137,10 @@ public class ALThreadMutexMgr
      */
     public void releaseAllMutex()
     {
-        //清空队列中每个锁对象的加锁信息
-        while(!_m_lThreadMutexList.isEmpty())
+        //清空队列中每个锁对象的加锁信息，这里不对队列是否为空判断，因为已经加锁的对象如果在此异常解锁并不会从队列删除
+        for(int i = 0; i < _m_lThreadMutexList.size(); i++)
         {
-            ALMutexInfo info = _m_lThreadMutexList.get(0);
+            ALMutexInfo info = _m_lThreadMutexList.get(i);
             
             if(null == info)
                 continue;
