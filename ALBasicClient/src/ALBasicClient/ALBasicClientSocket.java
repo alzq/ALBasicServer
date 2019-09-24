@@ -26,7 +26,10 @@ public class ALBasicClientSocket
     private int _m_iServerPort;
     /** 连接的端口对�*/
     private SocketChannel _m_scSocket;
-    
+
+    /** 端口对象锁 */
+    private ReentrantLock _m_rSocketMutex;
+
     /** 发送队列锁 */
     private ReentrantLock _m_rSendListMutex;
     /** 需要发送的消息队列 */
@@ -37,6 +40,9 @@ public class ALBasicClientSocket
     private ByteBuffer _m_bByteBuffer;
     private ByteBuffer _m_bTmpByteBuffer;
     
+    /** 接收消息的线程对象 */
+    private ALBasicClientRecThread _m_rtReadThread;
+    
     public ALBasicClientSocket(_AALBasicClientListener _client, String _serverIP, int _serverPort)
     {
         _m_iClientID = 0;
@@ -46,6 +52,7 @@ public class ALBasicClientSocket
         
         _m_clClient = _client;
         
+        _m_rSocketMutex = new ReentrantLock();
         _m_rSendListMutex = new ReentrantLock();
         _m_lSendBufferList = new LinkedList<ByteBuffer>();
         
@@ -55,6 +62,8 @@ public class ALBasicClientSocket
         _m_bByteBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen());
         _m_bTmpByteBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen());
         _m_bByteBuffer.clear();
+        
+        _m_rtReadThread = null;
     }
     
     public long getID() {return _m_iClientID;}
@@ -88,9 +97,9 @@ public class ALBasicClientSocket
 
         _m_bLoginIng = true;
 
-        ALBasicClientRecThread recThread = 
+        _m_rtReadThread = 
                 new ALBasicClientRecThread(_clientType, _userName, _userPassword, _customMsg, this, _m_sServerIP, _m_iServerPort);
-        recThread.start();
+        _m_rtReadThread.start();
     }
     
     /****************
@@ -208,62 +217,70 @@ public class ALBasicClientSocket
      */
     protected void _realSendMessage()
     {
-        if(null == _m_scSocket)
-            return ;
-        
-        if(!_m_scSocket.isConnected())
+        _lockSocket();
+        try
         {
-            ALBasicSendingClientManager.getInstance().addSendSocket(this);
-            return ;
+	        if(null == _m_scSocket)
+	            return ;
+	        
+	        if(!_m_scSocket.isConnected())
+	        {
+	            ALBasicSendingClientManager.getInstance().addSendSocket(this);
+	            return ;
+	        }
+	        
+	        //使用协同大小包发送
+	        //ByteBuffer tmpSendBuffer = ByteBuffer.allocate(1460);
+	        //ByteBuffer realSendBuffer = ByteBuffer.allocate(1460);
+	
+	        boolean needAddToSendList = false;
+	        _lockBuf();
+	
+	        while(!_m_lSendBufferList.isEmpty())
+	        {
+	            //Socket 允许写入操作�
+	            ByteBuffer buf = _m_lSendBufferList.getFirst();
+	
+	            if(buf.remaining() <= 0)
+	            {
+	                ALServerLog.Error("try to send a null buffer");
+	                ALServerLog.Error("Wrong buffer:");
+	                for(int i = 0; i < buf.limit(); i++)
+	                {
+	                    ALServerLog.Error(buf.get(i) + " ");
+	                }
+	            }
+	            
+	            try {
+	                _m_scSocket.write(buf);
+	                
+	                //判断写入后对应数据的读取指针位置
+	                if(buf.remaining() <= 0)
+	                    _m_lSendBufferList.pop();
+	                else
+	                    break;
+	            }
+	            catch (IOException e)
+	            {
+	                ALServerLog.Error("Client Socket send message error! socket id[" + getID() + "]");
+	                e.printStackTrace();
+	                break;
+	            }
+	        }
+	        
+	        //当需要发送队列不为空时，继续添加发送节�
+	        if(!_m_lSendBufferList.isEmpty())
+	            needAddToSendList = true;
+	        
+	        _unlockBuf();
+	        
+	        if(needAddToSendList)
+	            ALBasicSendingClientManager.getInstance().addSendSocket(this);
         }
-        
-        //使用协同大小包发送
-        //ByteBuffer tmpSendBuffer = ByteBuffer.allocate(1460);
-        //ByteBuffer realSendBuffer = ByteBuffer.allocate(1460);
-
-        boolean needAddToSendList = false;
-        _lockBuf();
-
-        while(!_m_lSendBufferList.isEmpty())
+        finally
         {
-            //Socket 允许写入操作�
-            ByteBuffer buf = _m_lSendBufferList.getFirst();
-
-            if(buf.remaining() <= 0)
-            {
-                ALServerLog.Error("try to send a null buffer");
-                ALServerLog.Error("Wrong buffer:");
-                for(int i = 0; i < buf.limit(); i++)
-                {
-                    ALServerLog.Error(buf.get(i) + " ");
-                }
-            }
-            
-            try {
-                _m_scSocket.write(buf);
-                
-                //判断写入后对应数据的读取指针位置
-                if(buf.remaining() <= 0)
-                    _m_lSendBufferList.pop();
-                else
-                    break;
-            }
-            catch (IOException e)
-            {
-                ALServerLog.Error("Client Socket send message error! socket id[" + getID() + "]");
-                e.printStackTrace();
-                break;
-            }
+        	_unlockSocket();
         }
-        
-        //当需要发送队列不为空时，继续添加发送节�
-        if(!_m_lSendBufferList.isEmpty())
-            needAddToSendList = true;
-        
-        _unlockBuf();
-        
-        if(needAddToSendList)
-            ALBasicSendingClientManager.getInstance().addSendSocket(this);
     }
     
     /*********************
@@ -353,10 +370,18 @@ public class ALBasicClientSocket
 
     protected SocketChannel _getSocketChannel() throws Exception
     {
-        if(null == _m_scSocket)
-            _m_scSocket = SocketChannel.open();
-            
-        return _m_scSocket;
+        _lockSocket();
+        try
+        {
+	        if(null == _m_scSocket)
+	            _m_scSocket = SocketChannel.open();
+	            
+	        return _m_scSocket;
+        }
+        finally
+        {
+        	_unlockSocket();
+        }
     }
     
     /*************
@@ -395,13 +420,21 @@ public class ALBasicClientSocket
      */
     protected void _logout()
     {
-        if(null != _m_scSocket)
+        _lockSocket();
+        try
         {
-            try
-            {
-                _m_scSocket.close();
-            }
-            catch (IOException e){}
+	        if(null != _m_scSocket)
+	        {
+	            try
+	            {
+	                _m_scSocket.close();
+	            }
+	            catch (IOException e){}
+	        }
+        }
+        finally
+        {
+        	_unlockSocket();
         }
         
         _clearLoginValidate();
@@ -433,7 +466,31 @@ public class ALBasicClientSocket
             
         _m_bLoged = false;
         _m_bLoginIng = false;
-        _m_scSocket = null;
+        
+        _lockSocket();
+        try
+        {
+        	_m_scSocket = null;
+        }
+        finally
+        {
+        	_unlockSocket();
+        }
+        
+        if(null != _m_rtReadThread)
+        {
+        	_m_rtReadThread.ExitThread();
+        	_m_rtReadThread = null;
+        }
+    }
+    
+    protected void _lockSocket()
+    {
+        _m_rSocketMutex.lock();
+    }
+    protected void _unlockSocket()
+    {
+    	_m_rSocketMutex.unlock();
     }
     
     protected void _lockBuf()
