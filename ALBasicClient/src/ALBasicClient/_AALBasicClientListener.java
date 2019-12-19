@@ -121,6 +121,10 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
      */
     public abstract void LoginSuc(String _customRetMsg);
     /**************
+     * 接收的消息长度超出时调用的函数
+     */
+    public abstract void onBuffLengthOverSize(ByteBuffer _buf);
+    /**************
      * 消息发送失败时的事件函数
      * @param _buffer
      */

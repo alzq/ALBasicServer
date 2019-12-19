@@ -91,4 +91,9 @@ public abstract class _AALBasicServerSocketListener implements _IALProtocolRecei
      * @time   Feb 19, 2013 1:37:13 PM
      */
     public abstract void disconnect();
+    
+    /**************
+     * 接收的消息长度超出时调用的函数
+     */
+    public abstract void onBuffLengthOverSize(ByteBuffer _buf);
 }

@@ -298,7 +298,11 @@ public class ALBasicClientSocket
         }
         catch (BufferOverflowException e)
         {
-            ALServerLog.Error("_socketReceivingMessage length is too long, Socket Buffer need more!");
+            ALServerLog.Error("'client socket' _socketReceivingMessage length is too long, Socket Buffer need more!");
+            //处理事件
+            if(null != _m_clClient)
+            	_m_clClient.onBuffLengthOverSize(_buf);
+            
             _m_bByteBuffer.put(_buf.array(), 0, _m_bByteBuffer.remaining());
             //放置缓冲区读取指�
             _buf.position(_m_bByteBuffer.remaining());
