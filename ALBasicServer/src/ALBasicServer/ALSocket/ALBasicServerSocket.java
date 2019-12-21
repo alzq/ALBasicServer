@@ -69,8 +69,8 @@ public class ALBasicServerSocket
         _m_lSendBufferList = new LinkedList<ByteBuffer>();
         
         _m_sBufferLen = 0;
-        _m_bByteBuffer = ByteBuffer.allocate(_bufLen);
-        _m_bTmpByteBuffer = ByteBuffer.allocate(_bufLen);
+        _m_bByteBuffer = ByteBuffer.allocate(_bufLen * 2);
+        _m_bTmpByteBuffer = ByteBuffer.allocate(_bufLen * 2);
         _m_bByteBuffer.clear();
     }
     

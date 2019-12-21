@@ -59,8 +59,8 @@ public class ALBasicClientSocket
         _m_bLoginIng = false;
         _m_bLoged = false;
         _m_sBufferLen = 0;
-        _m_bByteBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen());
-        _m_bTmpByteBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen());
+        _m_bByteBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen() * 2);
+        _m_bTmpByteBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen() * 2);
         _m_bByteBuffer.clear();
         
         _m_rtReadThread = null;

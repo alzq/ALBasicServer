@@ -42,7 +42,7 @@ public class ALServerSocketListenFunction
         int verifyObjIdx = ALVerifyObjMgr.getInstance().regVerifyObj(_verifyObj);
         
         //创建接收BUF
-        ByteBuffer recBuffer = ByteBuffer.allocate(_recBuffLen * 2);
+        ByteBuffer recBuffer = ByteBuffer.allocate(_recBuffLen);
         
         try {
             //创建事件响应对象

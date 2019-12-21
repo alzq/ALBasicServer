@@ -95,7 +95,7 @@ public class ALBasicClientRecThread extends _AALBasicThread
         }
         
         //创建接收BUF
-        ByteBuffer recBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen() * 2);
+        ByteBuffer recBuffer = ByteBuffer.allocate(ALBasicClientConf.getInstance().getRecBufferLen());
 
         //开启循环处理Socket事件
         while(!_m_bThreadExit)
