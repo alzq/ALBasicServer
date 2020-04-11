@@ -414,7 +414,7 @@ public class ALBasicServerSocket
             ALServerLog.Error("'server socket' _socketReceivingMessage length is too long, Socket Buffer need more!");
             //处理事件
             if(null != _m_clListener)
-            	_m_clListener.onBuffLengthOverSize(_buf);
+            	_m_clListener.onBuffLengthOverSize(_m_bByteBuffer, _buf);
             
             _m_bByteBuffer.put(_buf.array(), 0, _m_bByteBuffer.remaining());
             //放置待插入数据中指针位置为缓冲区读取指针，可在数据处理后再将数据放入缓存一次

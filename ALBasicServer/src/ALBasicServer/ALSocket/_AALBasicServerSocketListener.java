@@ -95,5 +95,5 @@ public abstract class _AALBasicServerSocketListener implements _IALProtocolRecei
     /**************
      * 接收的消息长度超出时调用的函数
      */
-    public abstract void onBuffLengthOverSize(ByteBuffer _buf);
+    public abstract void onBuffLengthOverSize(ByteBuffer _srcBuf, ByteBuffer _curReadingBuf);
 }
