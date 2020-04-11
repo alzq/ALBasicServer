@@ -123,7 +123,7 @@ public abstract class _AALBasicClientListener implements _IALProtocolReceiver
     /**************
      * 接收的消息长度超出时调用的函数
      */
-    public abstract void onBuffLengthOverSize(ByteBuffer _buf);
+    public abstract void onBuffLengthOverSize(ByteBuffer _srcBuf, ByteBuffer _curReadingBuf);
     /**************
      * 消息发送失败时的事件函数
      * @param _buffer
