@@ -1,10 +1,14 @@
 package ALBasicClient;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 import ALBasicProtocolPack._IALProtocolStructure;
@@ -24,6 +28,8 @@ public class ALBasicClientSocket
     /** 连接服务器的IP，端�*/
     private String _m_sServerIP;
     private int _m_iServerPort;
+    /** 开启端口处理的操作对象 */
+    private Selector _m_sSelector;
     /** 连接的端口对�*/
     private SocketChannel _m_scSocket;
 
@@ -48,6 +54,8 @@ public class ALBasicClientSocket
         _m_iClientID = 0;
         _m_sServerIP = _serverIP;
         _m_iServerPort = _serverPort;
+        
+        _m_sSelector = null;
         _m_scSocket = null;
         
         _m_clClient = _client;
@@ -372,20 +380,71 @@ public class ALBasicClientSocket
         }
     }
 
-    protected SocketChannel _getSocketChannel() throws Exception
+    /************
+     * 初始化对应的端口数据
+     * @param _ip
+     * @param _port
+     * @return
+     * @throws Exception
+     */
+    public boolean initSocket(String _ip, int _port) throws Exception
     {
+    	if(null != _m_scSocket)
+    	{
+            ALServerLog.Fatal("Init Socket After it is already inited!!");
+    		return false;
+    	}
+    	
         _lockSocket();
         try
         {
+        	//如果没有初始化selector则初始化创建
+        	if(null == _m_sSelector)
+        		_m_sSelector = Selector.open();
+        	
 	        if(null == _m_scSocket)
 	            _m_scSocket = SocketChannel.open();
+
+            InetSocketAddress address = new InetSocketAddress(_m_sServerIP, _m_iServerPort);
+            if(!_m_scSocket.connect(address))
+            {
+                _logout();
+                _closeSelector();
+                return false;
+            }
+
+	        _m_scSocket.configureBlocking(false);
+	        _m_scSocket.socket().setTcpNoDelay(true);
+	        _m_scSocket.socket().setKeepAlive(true);
+	        _m_scSocket.register(_m_sSelector, SelectionKey.OP_READ);
 	            
-	        return _m_scSocket;
+	        return true;
         }
         finally
         {
         	_unlockSocket();
         }
+    }
+    
+    /**************
+     * 处理消息的selectKey操作
+     */
+    public Set<SelectionKey> selectKeys() throws Exception
+    {
+    	if(null == _m_sSelector)
+    		throw new NullPointerException();
+    	
+        try
+        {
+        	_m_sSelector.select();
+        } catch (Exception e) {
+            ALServerLog.Fatal("Client port select event error!!");
+            e.printStackTrace();
+            
+            return null;
+        }
+    	
+    	return _m_sSelector.selectedKeys();
     }
     
     /*************
@@ -442,6 +501,24 @@ public class ALBasicClientSocket
         }
         
         _clearLoginValidate();
+        
+        //释放selector
+        _closeSelector();
+    }
+    
+    /***********
+     * 关闭selector操作
+     */
+    protected void _closeSelector()
+    {
+        if(null != _m_sSelector)
+        {
+			try {
+				_m_sSelector.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
     }
     
     /***********

@@ -1,10 +1,8 @@
 package ALBasicClient;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
@@ -25,7 +23,6 @@ public class ALBasicClientRecThread extends _AALBasicThread
     /** 线程是否退出 */
     private boolean _m_bThreadExit;
     private ALBasicClientSocket _m_scSocket;
-    private SocketChannel _m_SocketChannel;
     private String _m_sServerIP;
     private int _m_iServerPort;
     
@@ -38,10 +35,10 @@ public class ALBasicClientRecThread extends _AALBasicThread
         _m_sUserPassword = _userPassword;
         _m_sCustomMsg = _customMsg;
         _m_bThreadExit = false;
+        
         _m_scSocket = _socket;
         _m_sServerIP = _serverIP;
         _m_iServerPort = _serverPort;
-        _m_SocketChannel = null;
     }
 
     public void ExitThread()
@@ -58,23 +55,10 @@ public class ALBasicClientRecThread extends _AALBasicThread
     @Override
     protected void _run()
     {
-        Selector clientSelector = null;
         try
         {
-            clientSelector = Selector.open();
-            _m_SocketChannel = _m_scSocket._getSocketChannel();
-
-            InetSocketAddress address = new InetSocketAddress(_m_sServerIP, _m_iServerPort);
-            if(!_m_SocketChannel.connect(address))
-            {
-                _m_scSocket._logout();
-                return ;
-            }
-
-            _m_SocketChannel.configureBlocking(false);
-            _m_SocketChannel.socket().setTcpNoDelay(true);
-            _m_SocketChannel.socket().setKeepAlive(true);
-            _m_SocketChannel.register(clientSelector, SelectionKey.OP_READ);
+            if(!_m_scSocket.initSocket(_m_sServerIP, _m_iServerPort))
+            	return ;
             
             //发送登录请求
             C2S_BasicClientVerifyInfo msg = new C2S_BasicClientVerifyInfo();
@@ -102,16 +86,12 @@ public class ALBasicClientRecThread extends _AALBasicThread
         {
             try
             {
-                clientSelector.select();
-            } catch (Exception e) {
-                ALServerLog.Fatal("Client port select event error!!");
-                e.printStackTrace();
-            }
-            
-            try
-            {
 	            //循环获取到的事件
-	            Set<SelectionKey> readyKeySet = clientSelector.selectedKeys();
+	            Set<SelectionKey> readyKeySet = _m_scSocket.selectKeys();
+	            //返回空表示里面处理select有问题，但是不一定需要断开连接
+	            if(null == readyKeySet)
+	            	continue;
+	            
 	            Iterator<SelectionKey> iter = readyKeySet.iterator();
 	            while(iter.hasNext())
 	            {
