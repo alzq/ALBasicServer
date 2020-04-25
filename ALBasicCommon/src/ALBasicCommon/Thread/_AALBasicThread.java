@@ -18,7 +18,12 @@ public abstract class _AALBasicThread extends Thread
     private ThreadStat _m_eThreadStat;
     /** 是否需要即时响应任务 */
     private boolean _m_bIsImdThread;
-    
+
+    public _AALBasicThread()
+    {
+        _m_eThreadStat = ThreadStat.INIT;
+        _m_bIsImdThread = true;
+    }
     public _AALBasicThread(boolean _isSyn)
     {
         _m_eThreadStat = ThreadStat.INIT;
