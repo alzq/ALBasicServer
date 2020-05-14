@@ -23,10 +23,17 @@ public class ALBasicServer
      */
     public static void initBasicServer(int _asynTaskDealThreadCount)
     {
+    	initBasicServer(_asynTaskDealThreadCount, false);
+    }
+    public static void initBasicServer(int _asynTaskDealThreadCount, boolean _dupErr)
+    {
         if(g_inited)
         {
-        	ALServerLog.Fatal("Please don't try to repeat init AL Basic Server model!!");
-            new Exception().printStackTrace();
+        	if(_dupErr)
+        	{
+	        	ALServerLog.Fatal("Please don't try to repeat init AL Basic Server model!!");
+	            new Exception().printStackTrace();
+        	}
             return ;
         }
         

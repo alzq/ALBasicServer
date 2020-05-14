@@ -6,16 +6,26 @@ public class ALBasicClient
 {
     /** 是否成功初始化 */
     private static boolean g_inited = false;
-    
+
     /************************
      * 初始化相关客户端环境
      */
     public static void init()
     {
+    	init(false);
+    }
+    /************************
+     * 初始化相关客户端环境
+     */
+    public static void init(boolean _dupErr)
+    {
         if(g_inited)
         {
-            ALServerLog.Fatal("Please don't try to repeat init AL Basic Client model!!");
-            new Exception().printStackTrace();
+        	if(_dupErr)
+        	{
+	            ALServerLog.Fatal("Please don't try to repeat init AL Basic Client model!!");
+	            new Exception().printStackTrace();
+        	}
             return ;
         }
         
