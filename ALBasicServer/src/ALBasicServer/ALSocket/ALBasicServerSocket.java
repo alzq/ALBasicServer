@@ -1,5 +1,6 @@
 package ALBasicServer.ALSocket;
 
+import java.io.IOException;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -505,6 +506,11 @@ public class ALBasicServerSocket
         }
         catch (Exception e)
         {
+        	try {
+				ALServerLog.Fatal(_m_scSocketChannel.getRemoteAddress().toString() + " Connect Read VerifyInfo Error!");
+			} catch (IOException e1) {
+				ALServerLog.Fatal("Connect Read VerifyInfo Try getIP Error!");
+			}
             //读取信息直接异常，则踢出用户
             ALServerSocketMgr.getInstance().kickUser(this);
             return ;
