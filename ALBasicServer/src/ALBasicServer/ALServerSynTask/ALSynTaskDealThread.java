@@ -71,6 +71,15 @@ public class ALSynTaskDealThread extends _AALBasicThread
                     if(ALBasicServerConf.getInstance().getCheckMutex())
                         _m_tmrThreadMutexMgr.releaseAllMutex();
                 }
+                catch(Throwable _t)
+                {
+                    ALServerLog.Error(curTask.getClass().getName() + " Get Throwable Error!!");
+                    _t.printStackTrace();
+                    
+                    //当有进行锁检测时需要尝试释放所有注册锁，避免异常的操作导致锁未释放
+                    if(ALBasicServerConf.getInstance().getCheckMutex())
+                        _m_tmrThreadMutexMgr.releaseAllMutex();
+                }
 
                 //在任务正常或异常执行完后都需要对锁的释放情况进行判断
                 if(ALBasicServerConf.getInstance().getCheckMutex())
