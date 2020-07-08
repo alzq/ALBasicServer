@@ -4,6 +4,7 @@ import ALBasicServer.ALServerSynTask.ALSynTaskManager;
 import ALBasicServer.ALTask._IALAsynCallBackTask;
 import ALBasicServer.ALTask._IALAsynCallTask;
 import ALBasicServer.ALTask._IALAsynRunnableTask;
+import ALServerLog.ALServerLog;
 
 /*********************
  * 异步任务处理信息对象
@@ -46,7 +47,13 @@ public class ALAsynTaskInfo<T>
             }
             catch (Exception e)
             {
+                ALServerLog.Error(_m_tRunObj.getClass().getName() + " Get Async Error!!");
                 e.printStackTrace();
+            }
+            catch(Throwable _t)
+            {
+                ALServerLog.Error(_m_tRunObj.getClass().getName() + " Get Async Throwable Error!!");
+                _t.printStackTrace();
             }
 
             //添加任务进行回调的处理

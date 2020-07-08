@@ -3,6 +3,7 @@ package ALMySqlCommon.ALMySqlCommonObj.ALMySqlConnectionPool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -200,6 +201,11 @@ public abstract class _AALMySqlBaseDBObj
                 
                 //创建连接
                 Connection conn = DriverManager.getConnection(urlStr, _m_sUserName, _m_sPassword);
+
+                //设置字符集utf8mb4支持emoji字符串
+				String sqlCharset = "set names utf8mb4";
+				Statement statment = conn.createStatement();
+				statment.executeQuery(sqlCharset);
                 
                 return conn;
             }
