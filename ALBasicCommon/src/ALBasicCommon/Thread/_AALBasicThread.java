@@ -55,6 +55,15 @@ public abstract class _AALBasicThread extends Thread
         _m_eThreadStat = ThreadStat.STOP;
     }
     
+    /***********
+     * 重新设置是否需要立即响应的线程处理逻辑，一般在服务器进行初始化之后需要调整此参数
+     * @param _isImdThread
+     */
+    public final void setIsImd(boolean _isImdThread)
+    {
+    	_m_bIsImdThread = _isImdThread;
+    }
+    
     /****************
      * 需要重载的线程执行体
      * 
