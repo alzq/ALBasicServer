@@ -417,6 +417,8 @@ public class ALBasicClientSocket
 	        _m_scSocket.socket().setTcpNoDelay(true);
 	        _m_scSocket.socket().setKeepAlive(true);
 	        _m_scSocket.register(_m_sSelector, SelectionKey.OP_READ);
+	        
+	        _m_bLoginIng = false;
 	            
 	        return true;
         }
@@ -455,8 +457,6 @@ public class ALBasicClientSocket
      */
     protected void _checkLoginMes(ByteBuffer _mes)
     {
-        _m_bLoginIng = false;
-        
         try
         {
             S2C_BasicClientVerifyResult msg = new S2C_BasicClientVerifyResult();
