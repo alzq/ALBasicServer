@@ -130,6 +130,51 @@ public class ALThreadManager
         return threadMutexMgr;
     }
     
+    /***************
+     * 在工程中注销一个线程对象
+     * 
+     * @author alzq.z
+     * @time   Feb 19, 2013 4:29:23 PM
+     */
+    public ALThreadMutexMgr unregThread(long _threadID)
+    {
+        if(!_m_htThreadMutexInfoTable.containsKey(_threadID))
+            return null;
+        
+        ALServerLog.Info("Unreg thread: " + _threadID);
+        
+        ALThreadMutexMgr preMgr = _m_htThreadMutexInfoTable.remove(_threadID);
+        //释放已占有的锁，避免控制内死锁
+        preMgr.releaseAllMutex();
+        
+        return preMgr;
+    }
+    
+    /****************
+     * 注册调用本函数的当前线程
+     * @return
+     */
+    public ALThreadMutexMgr regCurThread()
+    {
+        //获取当前线程ID
+        long curThreadID = Thread.currentThread().getId();
+        
+        //创建线程注册对象
+        return regThread(curThreadID);
+    }
+    /************
+     * 注销本调用本函数的当前线程
+     * @return
+     */
+    public ALThreadMutexMgr unregCurThread()
+    {
+        //获取当前线程ID
+        long curThreadID = Thread.currentThread().getId();
+        
+        //创建线程注册对象
+        return unregThread(curThreadID);
+    }
+    
     /****************
      * 获取对应线程的锁信息控制对象
      * 
