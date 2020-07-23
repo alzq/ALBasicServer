@@ -202,6 +202,9 @@ public class ALProtocolCommon
      */
     public static String GetStringFromBuf(ByteBuffer _buff)
     {
+    	if(_buff.remaining() <= 0)
+    		return "";
+    	
         short len = _buff.getShort();
         if(0 == len)
             return "";
