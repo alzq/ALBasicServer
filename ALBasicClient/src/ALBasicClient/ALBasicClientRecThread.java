@@ -47,6 +47,21 @@ public class ALBasicClientRecThread extends _AALBasicThread
     }
     
     /******************
+     * 线程结束时执行的函数
+     * 
+     * @author alzq.z
+     * @time   Feb 20, 2013 10:48:09 PM
+     */
+    @Override
+    protected void _onThreadStart()
+    {
+    }
+    @Override
+    protected void _onThreadEnd()
+    {
+    }
+    
+    /******************
      * 线程执行函数
      * 
      * @author alzq.z

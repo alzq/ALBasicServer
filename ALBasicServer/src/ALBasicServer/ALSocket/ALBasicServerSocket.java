@@ -507,7 +507,9 @@ public class ALBasicServerSocket
         catch (Exception e)
         {
         	try {
-				ALServerLog.Fatal(_m_scSocketChannel.getRemoteAddress().toString() + " Connect Read VerifyInfo Error!");
+				ALServerLog.Fatal(_m_scSocketChannel.getRemoteAddress().toString() + " Connect Read VerifyInfo Error! ");
+				//输出堆栈
+				e.printStackTrace();
 			} catch (IOException e1) {
 				ALServerLog.Fatal("Connect Read VerifyInfo Try getIP Error!");
 			}

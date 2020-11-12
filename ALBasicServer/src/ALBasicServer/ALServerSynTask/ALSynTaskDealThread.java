@@ -30,13 +30,13 @@ public class ALSynTaskDealThread extends _AALBasicThread
     }
     
     /******************
-     * 线程执行函数
+     * 线程结束时执行的函数
      * 
      * @author alzq.z
-     * @time   Feb 20, 2013 11:05:54 PM
+     * @time   Feb 20, 2013 10:48:09 PM
      */
     @Override
-    protected void _run()
+    protected void _onThreadStart()
     {
         if(ALBasicServerConf.getInstance().getCheckMutex())
         {
@@ -48,7 +48,24 @@ public class ALSynTaskDealThread extends _AALBasicThread
             if(null == _m_tmrThreadMutexMgr)
                 return ;
         }
-        
+    }
+    @Override
+    protected void _onThreadEnd()
+    {
+        //当有进行锁检测时需要尝试释放所有注册锁，避免异常的操作导致锁未释放
+        if(ALBasicServerConf.getInstance().getCheckMutex())
+            _m_tmrThreadMutexMgr.releaseAllMutex();
+    }
+    
+    /******************
+     * 线程执行函数
+     * 
+     * @author alzq.z
+     * @time   Feb 20, 2013 11:05:54 PM
+     */
+    @Override
+    protected void _run()
+    {
         while(!_m_bThreadExit)
         {
             //执行任务循环

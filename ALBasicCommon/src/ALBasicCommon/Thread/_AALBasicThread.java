@@ -48,7 +48,47 @@ public abstract class _AALBasicThread extends Thread
         _m_lThreadId = Thread.currentThread().getId();
         ALBasicThreadMgr.getInstance().regThread(this);
         
-        _run();
+        try
+        {
+	        //尝试在开始线程处理的时候进行的相关处理
+	        _onThreadStart();
+        }
+        catch(Exception _ex)
+        {
+        	_ex.printStackTrace();
+        }
+        catch(Throwable _exT)
+        {
+        	_exT.printStackTrace();
+        }
+        
+        try
+        {
+	        _run();
+        }
+        catch(Exception _ex)
+        {
+        	_ex.printStackTrace();
+        }
+        catch(Throwable _exT)
+        {
+        	_exT.printStackTrace();
+        }
+        finally {
+            try
+            {
+    	        //尝试在销毁线程的时候处理收尾
+    	        _onThreadEnd();
+            }
+            catch(Exception _ex)
+            {
+            	_ex.printStackTrace();
+            }
+            catch(Throwable _exT)
+            {
+            	_exT.printStackTrace();
+            }
+		}
 
         //注销自己
         ALBasicThreadMgr.getInstance().unregThread(this);
@@ -71,4 +111,12 @@ public abstract class _AALBasicThread extends Thread
      * @time   Feb 20, 2013 10:46:45 PM
      */
     protected abstract void _run();
+    /****************
+     * 线程结束时的处理
+     * 
+     * @author alzq.z
+     * @time   Feb 20, 2013 10:46:45 PM
+     */
+    protected abstract void _onThreadStart();
+    protected abstract void _onThreadEnd();
 }

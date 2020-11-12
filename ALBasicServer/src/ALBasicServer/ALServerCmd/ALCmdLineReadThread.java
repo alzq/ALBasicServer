@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import ALBasicCommon.Thread._AALBasicThread;
+import ALBasicServer.ALThread._AALServerBasicThread;
 
 /**********************
  * 命令行的读取线程
@@ -13,7 +13,7 @@ import ALBasicCommon.Thread._AALBasicThread;
  * @email  zhuangfan@vip.163.com
  * @time   Oct 5, 2013 12:15:14 PM
  */
-public class ALCmdLineReadThread extends _AALBasicThread
+public class ALCmdLineReadThread extends _AALServerBasicThread
 {
     public ALCmdLineReadThread() 
     {
