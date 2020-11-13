@@ -29,7 +29,6 @@ public class SynAsynCallBackTask<T> implements _IALSynTask
             {
                 //回调过程中错误则当作失败处理
                 e.printStackTrace();
-                _m_CallBackTask.dealFail();
             }
         }
     }
