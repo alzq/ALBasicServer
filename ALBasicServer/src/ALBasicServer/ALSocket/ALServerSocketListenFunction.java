@@ -64,6 +64,13 @@ public class ALServerSocketListenFunction
             e.printStackTrace();
             return ;
         }
+        catch (Exception e)
+        {
+            //开启端口失败
+            ALServerLog.Fatal("Open server port error!! Port： " + _port);
+            e.printStackTrace();
+            return ;
+        }
         
         ALServerLog.Info("Server Start socket...");
         
