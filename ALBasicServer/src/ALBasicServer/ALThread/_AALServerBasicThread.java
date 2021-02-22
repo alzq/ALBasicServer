@@ -51,7 +51,7 @@ public abstract class _AALServerBasicThread extends _AALBasicThread
     protected void _onThreadEnd()
     {
         //当有进行锁检测时需要尝试释放所有注册锁，避免异常的操作导致锁未释放
-        if(ALBasicServerConf.getInstance().getCheckMutex())
+        if(ALBasicServerConf.getInstance().getCheckMutex() && null != _m_tmrThreadMutexMgr)
             _m_tmrThreadMutexMgr.releaseAllMutex();
     }
 }
