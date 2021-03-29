@@ -103,7 +103,7 @@ public class ALServerSocketListenFunction
                         try
                         {
                             SocketChannel client = serverSocketChannel.accept();
-                            ALServerLog.Info("Accept a client connection ");
+                            //ALServerLog.Info("Accept a client connection ");
                             
                             client.configureBlocking(false);
                             client.socket().setTcpNoDelay(true);

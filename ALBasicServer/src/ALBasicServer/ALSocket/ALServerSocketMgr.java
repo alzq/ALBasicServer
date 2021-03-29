@@ -80,7 +80,7 @@ public class ALServerSocketMgr
         if(null == _socket)
             return ;
         
-        ALServerLog.Info(_socket.getUserName() + " Disconnected!");
+        //ALServerLog.Info(_socket.getUserName() + " Disconnected!");
         
         SocketChannel channel = _socket._getSocketChannel();
         
