@@ -4,7 +4,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Hashtable;
 
 import ALBasicServer.ALServerSynTask.ALSynTaskManager;
-import ALServerLog.ALServerLog;
 
 /****************
  * 所有连接到本服务器的Socket的管理对象

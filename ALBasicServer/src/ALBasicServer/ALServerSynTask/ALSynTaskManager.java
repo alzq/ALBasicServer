@@ -7,6 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import ALBasicCommon.ALBasicCommonFun;
 import ALBasicServer.ALBasicServerConf;
 import ALBasicServer.ALTask._IALSynTask;
+import ALServerLog.ALServerLog;
 
 /**********************
  * 架构中的同步任务管理对象，对象中根据不同的任务安排方式进行处理<br>
@@ -100,14 +101,19 @@ public class ALSynTaskManager
     public void regTask(_IALSynTask _task)
     {
         _lockCurrentTaskList();
-        
-        //向链表中添加执行任务
-        _m_lCurrentTaskList.add(_task);
 
-        //释放任务数量信号量，在实际线程中将可获取任务进行处理
-        _releaseTaskEvent();
-        
-        _unlockCurrentTaskList();
+        try
+        {
+	        //向链表中添加执行任务
+	        _m_lCurrentTaskList.add(_task);
+	
+	        //释放任务数量信号量，在实际线程中将可获取任务进行处理
+	        _releaseTaskEvent();
+        }
+        finally
+        {
+        	_unlockCurrentTaskList();
+        }
     }
     
     /*********************
@@ -121,40 +127,50 @@ public class ALSynTaskManager
         _lockTimingTaskList();
         
         //判断定时时间，当非法，则直接当作当前执行任务插入
-        if(_time <= 0)
+        try
         {
-            regTask(_task);
+	        if(_time <= 0)
+	        {
+	            regTask(_task);
+	        }
+	        else
+	        {
+	            //获取当前时间
+	            long nowTime = ALBasicCommonFun.getNowTimeMS();
+	            //注册定时任务，将任务添加到表中等待插入到执行队列
+	            if(!_regTimingTask(nowTime + _time - _m_lTimingTaskMgrStartTime, _task))
+	                regTask(_task);
+	        }
         }
-        else
+        finally
         {
-            //获取当前时间
-            long nowTime = ALBasicCommonFun.getNowTimeMS();
-            //注册定时任务，将任务添加到表中等待插入到执行队列
-            if(!_regTimingTask(nowTime + _time - _m_lTimingTaskMgrStartTime, _task))
-                regTask(_task);
+        	_unlockTimingTaskList();
         }
-        
-        _unlockTimingTaskList();
     }
     public void regTask(_IALSynTask _task, long _time)
     {
         _lockTimingTaskList();
         
         //判断定时时间，当非法，则直接当作当前执行任务插入
-        if(_time <= 0)
+        try
         {
-            regTask(_task);
+	        if(_time <= 0)
+	        {
+	            regTask(_task);
+	        }
+	        else
+	        {
+	            //获取当前时间
+	            long nowTime = ALBasicCommonFun.getNowTimeMS();
+	            //注册定时任务，将任务添加到表中等待插入到执行队列
+	            if(!_regTimingTask(nowTime + _time - _m_lTimingTaskMgrStartTime, _task))
+	                regTask(_task);
+	        }
         }
-        else
+        finally
         {
-            //获取当前时间
-            long nowTime = ALBasicCommonFun.getNowTimeMS();
-            //注册定时任务，将任务添加到表中等待插入到执行队列
-            if(!_regTimingTask(nowTime + _time - _m_lTimingTaskMgrStartTime, _task))
-                regTask(_task);
+        	_unlockTimingTaskList();
         }
-        
-        _unlockTimingTaskList();
     }
     
     /*********************
@@ -167,19 +183,24 @@ public class ALSynTaskManager
     {
         _acquireTaskEvent();
         _lockCurrentTaskList();
-        
-        //判断任务队列是否为空
-        if(_m_lCurrentTaskList.isEmpty())
+
+        try
+        {
+	        //判断任务队列是否为空
+	        if(_m_lCurrentTaskList.isEmpty())
+	        {
+	            return null;
+	        }
+	        
+	        //取出并移除任务队列第一个任务
+	        _IALSynTask task = _m_lCurrentTaskList.removeFirst();
+	        
+	        return task;
+        }
+        finally
         {
             _unlockCurrentTaskList();
-            return null;
         }
-        
-        //取出并移除任务队列第一个任务
-        _IALSynTask task = _m_lCurrentTaskList.removeFirst();
-        
-        _unlockCurrentTaskList();
-        return task;
     }
     
     /****************
@@ -196,11 +217,16 @@ public class ALSynTaskManager
         {
             _lockCurrentTaskList();
             
-            _m_lCurrentTaskList.add(_taskList.removeFirst());
-
-            _releaseTaskEvent();
-            
-            _unlockCurrentTaskList();
+            try
+            {
+	            _m_lCurrentTaskList.add(_taskList.removeFirst());
+	
+	            _releaseTaskEvent();
+	        }
+	        finally
+	        {
+	            _unlockCurrentTaskList();
+	        }
         }
     }
     
@@ -283,6 +309,12 @@ public class ALSynTaskManager
                     tick -= _m_iTimingTaskCheckAreaSize;
                     round++;
                 }
+            }
+            
+            if(tick < 0 || tick >= _m_arrTimingTaskNodeList.length)
+            {
+            	ALServerLog.Fatal("Add A timing task by err time: " + _dealTime + " - calculate tick is: " + tick);
+            	return false;
             }
             
             //将任务添加到对应下标
