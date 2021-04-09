@@ -290,6 +290,12 @@ public class ALSynTaskManager
      */
     protected boolean _regTimingTask(long _dealTime, _IALSynTask _task)
     {
+    	if(_dealTime >= Integer.MAX_VALUE)
+        {
+        	ALServerLog.Fatal("Add A timing task delta time: " + _dealTime + " - is to huge");
+        	return false;
+        }
+    	
         _lockTimingTaskList();
         
         try
