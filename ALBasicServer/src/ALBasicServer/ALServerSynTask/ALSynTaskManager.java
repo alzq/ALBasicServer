@@ -290,41 +290,41 @@ public class ALSynTaskManager
      */
     protected boolean _regTimingTask(long _dealTime, _IALSynTask _task)
     {
-    	if(_dealTime >= Integer.MAX_VALUE)
-        {
-        	ALServerLog.Fatal("Add A timing task delta time: " + _dealTime + " - is to huge");
-        	return false;
-        }
-    	
         _lockTimingTaskList();
         
         try
         {
             //根据时间精度以及回合总时间区域计算对应的回合数以及时间节点
-            int tick = (int)((_dealTime + _m_iTimingTaskCheckTime - 1) / _m_iTimingTaskCheckTime);
-            int round = tick / _m_iTimingTaskCheckAreaSize;
+            long tick = (int)((_dealTime + _m_iTimingTaskCheckTime - 1) / _m_iTimingTaskCheckTime);
+            long round = tick / _m_iTimingTaskCheckAreaSize;
+        	if(round >= Integer.MAX_VALUE)
+            {
+            	ALServerLog.Fatal("Add A timing task delta time: " + _dealTime + " - is to huge");
+            	return false;
+            }
+        	
             //计算实际的下标数
-            tick = tick - (round * _m_iTimingTaskCheckAreaSize);
+            int internalTick = (int)(tick - (round * _m_iTimingTaskCheckAreaSize));
             
             //当下标和回合等于最后一次检测的数据时将任务移到下一个下标中进行处理
-            if(tick <= _m_iLastCheckTick && round <= _m_iLastCheckRound)
+            if(internalTick <= _m_iLastCheckTick && round <= _m_iLastCheckRound)
             {
-                tick++;
-                if(tick >= _m_iTimingTaskCheckAreaSize)
+            	internalTick++;
+                if(internalTick >= _m_iTimingTaskCheckAreaSize)
                 {
-                    tick -= _m_iTimingTaskCheckAreaSize;
+                	internalTick -= _m_iTimingTaskCheckAreaSize;
                     round++;
                 }
             }
             
-            if(tick < 0 || tick >= _m_arrTimingTaskNodeList.length)
+            if(internalTick < 0 || internalTick >= _m_arrTimingTaskNodeList.length)
             {
-            	ALServerLog.Fatal("Add A timing task by err time: " + _dealTime + " - calculate tick is: " + tick);
+            	ALServerLog.Fatal("Add A timing task by err time: " + _dealTime + " - calculate tick is: " + internalTick);
             	return false;
             }
             
             //将任务添加到对应下标
-            return _m_arrTimingTaskNodeList[tick].addTimingTask(round, _task);
+            return _m_arrTimingTaskNodeList[internalTick].addTimingTask((int)round, _task);
         }
         finally
         {
