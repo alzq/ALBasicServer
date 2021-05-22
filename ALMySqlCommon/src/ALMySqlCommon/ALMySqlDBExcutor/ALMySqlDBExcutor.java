@@ -45,7 +45,7 @@ public class ALMySqlDBExcutor
     	{
     		//输出日志错误
             ALServerLog.Fatal("=========================================================================================");
-            ALServerLog.Fatal("========  在需要立即响应的线程调用数据库操作，你可以调整线程初始化参数来避免报错！！！ =======");
+            ALServerLog.Fatal("========  在需要立即响应的线程调用数据库操作，你可以调整线程初始化参数来避免报错！！！StackTrace: =======");
             
             new Exception().printStackTrace();
             
